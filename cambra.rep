@@ -1,0 +1,9 @@
+//Privats
+
+ DIR_MAX = 4;
+bool obert = false;
+bool tancat = true;
+struct _cambra{
+  paret _p;   //enum {NORD, EST, SUD, OEST, NO_DIR};
+  bool _porta[DIR_MAX]; //obert o tancat
+};
