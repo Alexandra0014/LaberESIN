@@ -1,9 +1,3 @@
 //Privats
 
-
-bool oberta = false;
-bool tancat = true;
-struct _cambra{
-  paret _p;   //enum {NORD, EST, SUD, OEST, NO_DIR};
-  bool _porta[4]; //obert o tancat
-};
+bool _porta[4]; //obert o tancat

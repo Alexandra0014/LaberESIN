@@ -6,63 +6,55 @@
 //enum {NORD, EST, SUD, OEST, NO_DIR};
 cambra::cambra(bool n, bool s, bool e, bool o) throw(error){
   //0 --> nord, 1 --> sud, 2 --> est, 3 --> oest
-  _cambra cambra;
-  cambra._porta[cambra._p = 0] = n; //NORD = n
-  cambra._porta[cambra._p = 1] = e; //EST = e
-  cambra._porta[cambra._p = 2] = s; //SUD = s
-  cambra._porta[cambra._p = 3] = o; //OEST = o
-  if(cambra._p == 4) throw error(ParetInexistent);
-
+  _porta[0] = n; //NORD = n
+  _porta[1] = e; //EST = e
+  _porta[2] = s; //SUD = s
+  _porta[3] = o; //OEST = o
 }
 
 // Constructora per còpia, assignació i destructora.
 cambra::cambra(const cambra & c) throw(error){
-  _cambra cambra;
-  _cambra paramc;
-  paramc = c;
-  cambra._porta[cambra._p = 0] = paramc._porta[paramc._p =  0]; //NORD = n
-  cambra._porta[cambra._p = 1] = paramc._porta[paramc._p =  1];
-  cambra._porta[cambra._p = 2] = paramc._porta[paramc._p =  2];
-  cambra._porta[cambra._p = 3] = paramc._porta[paramc._p =  3];
+
+  _porta[0] = c._porta[0]; //NORD = n
+  _porta[1] = c._porta[1];
+  _porta[2] = c._porta[2];
+  _porta[3] = c._porta[3];
 }
 
 cambra & cambra::operator=(const cambra & c) throw(error){
   if(this != &c){
-    _cambra cambra;
-    _cambra paramc;
-    paramc = c;
-    cambra._porta[cambra._p = 0] = paramc._porta[paramc._p =  0]; //NORD = n
-    cambra._porta[cambra._p = 1] = paramc._porta[paramc._p =  1];
-    cambra._porta[cambra._p = 2] = paramc._porta[paramc._p =  2];
-    cambra._porta[cambra._p = 3] = paramc._porta[paramc._p =  3];
+    _porta[0] = c._porta[0]; //NORD = n
+    _porta[1] = c._porta[1];
+    _porta[2] = c._porta[2];
+    _porta[3] = c._porta[3];
   }
   return *this;
 }
 
-cambra::~cambra() throw(){}
+cambra::~cambra() throw(){
+  delete[] this;
+}
 
 // Retorna si l'habitació té una porta oberta a la paret indicada.
 // oberta == true
 // En p nos dirá si es NORD,SUD,EST,OEST,NO_DIR
 bool cambra::porta_oberta(paret p) const throw(){
-  _cambra cambra;
-  cambra._p = p;
-  bool porta_open = false;
-  if(cambra._porta[cambra._p = 0]) //NORD
+  bool porta_open = true;
+  if(p == 0) //NORD
   {
-    porta_open = oberta;
+    porta_open = _porta[0];
   }
-  else if ( cambra._porta[cambra._p = 1]) //EST
+  else if ( p == 1) //EST
   {
-    porta_open = oberta;
+    porta_open = _porta[1];
   }
-  else if( cambra._porta[cambra._p = 2]) //SUD
+  else if( p == 2) //SUD
   {
-    porta_open = oberta;
+    porta_open = _porta[2];
   }
-  else if ( cambra._porta[cambra._p = 3]) //OEST
+  else if ( p == 3) //OEST
   {
-    porta_open = oberta;
+    porta_open = _porta[3];
   }
   return porta_open;
 }
@@ -70,23 +62,23 @@ bool cambra::porta_oberta(paret p) const throw(){
 // Obre una nova porta a la paret indicada. Si la porta ja està oberta no
 // fa res. Es produeix un error si la paret és NO_DIR.
 void cambra::obre_porta(paret p) throw(error){
-  _cambra cambra;
-  cambra._p = p;
-  if( cambra._p == 0) //NORD
+
+  if(p == 0) //NORD
   {
-    cambra._porta[cambra._p = 0] = oberta;
+    _porta[0] = true;
   }
-  else if ( cambra._p == 1) //EST
+  else if ( p == 1) //EST
   {
-    cambra._porta[cambra._p = 1] = oberta;
+    _porta[1] = true;
   }
-  else if( cambra._p == 2) //SUD
+  else if( p == 2) //SUD
   {
-    cambra._porta[cambra._p = 2] = oberta;
+    _porta[2] = true;
   }
-  else if ( cambra._p == 3) //OEST
+  else if ( p == 3) //OEST
   {
-    cambra._porta[cambra._p = 3] = oberta;
+    _porta[3] = true;
+
   }else{
     throw error(ParetInexistent);
   }
@@ -96,23 +88,21 @@ void cambra::obre_porta(paret p) throw(error){
 // Tanca la porta a la paret indicada. Si la porta ja estava tancada no
 // fa res. Es produeix un error si la paret és NO_DIR.
 void cambra::tanca_porta(paret p) throw(error){
-  _cambra cambra;
-  cambra._p = p;
-  if( cambra._p == 0) //NORD
+  if( p == 0) //NORD
   {
-    cambra._porta[cambra._p = 0] = tancat;
+    _porta[0] = false;
   }
-  else if ( cambra._p == 1) //EST
+  else if ( p == 1) //EST
   {
-    cambra._porta[cambra._p = 1] = tancat;
+    _porta[1] = false;
   }
-  else if( cambra._p == 2) //SUD
+  else if( p == 2) //SUD
   {
-    cambra._porta[cambra._p = 2] = tancat;
+    _porta[2] = false;
   }
-  else if ( cambra._p == 3) //OEST
+  else if ( p == 3) //OEST
   {
-    cambra._porta[cambra._p = 3] = tancat;
+    _porta[3] = false;
   }else{
     throw error(ParetInexistent);
   }
@@ -122,13 +112,11 @@ void cambra::tanca_porta(paret p) throw(error){
 // Igualtat i desigualtat entre cambres. Dues cambres es consideren iguals
 // si tenen les mateixes portes obertes a les mateixes parets.
 bool cambra::operator==(const cambra & c) const throw(){
-  _cambra cambra;
-  _cambra paramc = c;
   bool igual = false;
-  if((cambra._porta[cambra._p = 0] == paramc._porta[paramc._p = 0]) &&
-      (cambra._porta[cambra._p = 1] == paramc._porta[paramc._p =  1]) &&
-      ( cambra._porta[cambra._p = 2] == paramc._porta[paramc._p =  2]) &&
-      ( cambra._porta[cambra._p = 3] == paramc._porta[paramc._p =  3] )) igual = true;
+  if((_porta[0] == c._porta[0]) &&
+      (_porta[1] == c._porta[1]) &&
+      ( _porta[2] == c._porta[2]) &&
+      ( _porta[3] == c._porta[3] )) igual = true;
 
 return igual;
 }
@@ -145,15 +133,24 @@ bool cambra::operator!=(const cambra & c) const throw(){
 //   cout << (c1 < c2); // escriu 'true'
 //   cout << (c2 < c3); // escriu 'true'
 bool cambra::operator<(const cambra & c) const throw(){
-  int cont1, cont2 = 0;
-  _cambra cambra;
-  _cambra paramc = c;
+  int contT_nuestro, contT_suyo;
   bool menor_que = false;
-  for(int i = 0; i < 4; i++){
-    if(paramc._porta[paramc._p = i] == tancat) cont1++;
-    if(cambra._porta[cambra._p = i] == tancat) cont2++;
+  bool parar = false;
+  for (int i = 0; i < 4; i++){
+    if(c._porta[i] == false) contT_suyo++;
+    else if(_porta[i] == false) contT_nuestro++;
   }
-  if(cont1 < cont2) menor_que = true;
+  if(contT_nuestro > contT_suyo) menor_que = true;
+  else if( contT_nuestro == contT_suyo){
+    int i =0;
+    while(!parar &&  i < 4){
+      if(_porta[i] != c._porta[i]){
+        if(_porta[i] == false) menor_que = true;
+        parar = true;
+      }
+      i++;
+    }
+  }
 
   return menor_que;
 }
