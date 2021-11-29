@@ -1,2 +1,4 @@
-posicio p;
-cambra* _c;
+posicio pos;
+util::nat _fila;
+util::nat _columna;
+cambra** _c;

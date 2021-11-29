@@ -6,12 +6,13 @@
 laberint::laberint(nat num_fil, nat num_col) throw(error){
   if (num_fil != 0 && num_col != 0)
   {
-    p.first = num_fil;
-    p.second = num_col;
-    for(nat i = 1; i <= p.first; i++){
-      for(nat j = 1; j <= p.second; j++ ){
-          _c = new cambra (false,false,false,false);
-      }
+    pos.first = num_fil;
+    pos.second = num_col;
+    _fila = pos.first;
+    _columna = pos.second;
+    _c = new cambra *[_fila];
+    for(nat i = 1; i <= pos.first; i++){
+        _c[i] = new cambra [_columna];
     }
   }
   else throw error(FilsColsIncorrecte);
@@ -27,40 +28,39 @@ laberint::laberint(std::istream & is) throw(error){
 
 // Constructora per còpia, assignació i destructora.
 laberint::laberint(const laberint & l) throw(error){
-  p.first = l.p.first;
-  p.second = l.p.second;
-  for(nat i = 1; i <= p.first; i++){
-    for(nat j = 1; j <= p.second; j++ ){
-        _c =l._c;
+  pos.first = l.pos.first;
+  pos.second = l.pos.second;
+  for(nat i = 1; i <= pos.first; i++){
+    for(nat j = 1; j <= pos.second; j++ ){
+        _c[i][j] =l._c[i][j];
     }
   }
 }
-laberint::laberint & operator=(const laberint & l) throw(error){
+laberint & laberint::operator=(const laberint & l) throw(error){
   if(this != &l){
-    p.first = l.p.first;
-    p.second = l.p.second;
-    for(nat i = 1; i <= p.first; i++){
-      for(nat j = 1; j <= p.second; j++ ){
-            _c =l._c;
+    pos.first = l.pos.first;
+    pos.second = l.pos.second;
+    for(nat i = 1; i <= pos.first; i++){
+      for(nat j = 1; j <= pos.second; j++ ){
+          _c[i][j] =l._c[i][j];
       }
     }
   }
   return *this;
 }
 laberint::~laberint() throw(){
-  for(nat i = 1; i <= p.first; i++){
-    for(nat j = 1; j <= p.second; j++ ){
-        delete _c[i][j];
-    }
+  for(nat i = 1; i <= pos.first; i++){
+        delete[] _c[i];
   }
+  delete [] _c;
 }
 
 // Retornen el número de files i columnes que té el laberint, respectivament.
 nat laberint::num_files() const throw(){
-  return p.first;
+  return pos.first;
 }
 nat laberint::num_columnes() const throw(){
-  return p.second;
+  return pos.second;
 }
 
 // Retorna la cambra situada a la posició especificada per pos.
@@ -73,10 +73,10 @@ cambra laberint::operator()(const posicio & pos) const throw(error){
   cambra res;
   nat r_fila = pos.first;
   nat r_col = pos.second;
-  for(nat i = 1; i <= p.first; i++){
-    for(nat j = 1; j <= p.second; j++ ){
+  for(nat i = 1; i <= pos.first; i++){
+    for(nat j = 1; j <= pos.second; j++ ){
         if(_c[i][j] == _c[r_fila][r_col]){
-          res = _c;
+          res = _c[i][j];
         }
     }
   }
@@ -90,11 +90,11 @@ cambra laberint::operator()(const posicio & pos) const throw(error){
 void laberint::obre_porta(paret p, const posicio & pos) throw(error){
   nat fila = pos.first;
   nat col = pos.second;
-  if(fila >= 1 && fila <= p.first && columna >= 1 && columna <= p.second){
-    if(fila == 1 && p == "S") throw error(PortaExterior);
-    else if(fila ==  p.first && p == "N") throw error(PortaExterior);
-    else if(columna == 1 && p == "O" ) throw error(PortaExterior);
-    else if(columna ==  p.second && p == "E") throw error(PortaExterior);
+  if(fila >= 1 && fila <= pos.first && col >= 1 && col <= pos.second){
+    if(fila == 1 && p == 'S') throw error(PortaExterior);
+    else if(fila ==  pos.first && p == 'N') throw error(PortaExterior);
+    else if(col == 1 && p == 'O') throw error(PortaExterior);
+    else if(col == pos.second && p == 'E') throw error(PortaExterior);
     else {
         _c[fila][col].obre_porta(p);
     }
@@ -109,11 +109,11 @@ void laberint::obre_porta(paret p, const posicio & pos) throw(error){
 void laberint::tanca_porta(paret p, const posicio & pos) throw(error){
   nat fila = pos.first;
   nat col = pos.second;
-  if(fila >= 1 && fila <= p.first && columna >= 1 && columna <= p.second){
-    if(fila == 1 && p == "S") throw error(PortaExterior);
-    else if(fila ==  p.first && p == "N") throw error(PortaExterior);
-    else if(columna == 1 && p == "O" ) throw error(PortaExterior);
-    else if(columna ==  p.second && p == "E") throw error(PortaExterior);
+  if(fila >= 1 && fila <= pos.first && col >= 1 && col <= pos.second){
+    if(fila == 1 && p == 'S') throw error(PortaExterior);
+    else if(fila ==  pos.first && p == 'N') throw error(PortaExterior);
+    else if(col == 1 && p == 'O' ) throw error(PortaExterior);
+    else if(col ==  pos.second && p == 'E') throw error(PortaExterior);
     else{
         _c[fila][col].tanca_porta(p);
     }
@@ -124,8 +124,8 @@ void laberint::tanca_porta(paret p, const posicio & pos) throw(error){
 // Escriu el laberint a l'ostream (canal de sortida) os. El format per escriure
 // el laberint seguirà l'exposat a l'apartat 2.3.
 void laberint::print(std::ostream & os) const throw(){
-  for(nat i = 1; i <= this.p.first; i++){
-    for(nat j = 1; j <= this.p.second; j++ ){
+  for(nat i = 1; i <= pos.first; i++){
+    for(nat j = 1; j <= pos.second; j++ ){
       os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*') << '*' << '\n';
       os << (_c[i][j].porta_oberta(paret("oest")) ? ' ' : '*') << ' ';
       os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << '\n';
