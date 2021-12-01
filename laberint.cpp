@@ -11,7 +11,7 @@ laberint::laberint(nat num_fil, nat num_col) throw(error){
     _fila = pos.first;
     _columna = pos.second;
     _c = new cambra *[_fila];
-    for(nat i = 1; i <= pos.first; i++){
+    for(nat i = 0; i < pos.first; i++){
         _c[i] = new cambra [_columna];
     }
   }
@@ -24,14 +24,16 @@ laberint::laberint(nat num_fil, nat num_col) throw(error){
 // el laberint és correcte.
 laberint::laberint(std::istream & is) throw(error){
   //is>>*this;
+  //las filas priemra i ultima no nos interesan i las columnas primera i ultima same
+  //2 fors que inicializados a 1
 }
 
 // Constructora per còpia, assignació i destructora.
 laberint::laberint(const laberint & l) throw(error){
   pos.first = l.pos.first;
   pos.second = l.pos.second;
-  for(nat i = 1; i <= pos.first; i++){
-    for(nat j = 1; j <= pos.second; j++ ){
+  for(nat i = 0; i < pos.first; i++){
+    for(nat j = 0; j < pos.second; j++ ){
         _c[i][j] =l._c[i][j];
     }
   }
@@ -40,8 +42,8 @@ laberint & laberint::operator=(const laberint & l) throw(error){
   if(this != &l){
     pos.first = l.pos.first;
     pos.second = l.pos.second;
-    for(nat i = 1; i <= pos.first; i++){
-      for(nat j = 1; j <= pos.second; j++ ){
+    for(nat i = 0; i < pos.first; i++){
+      for(nat j = 0; j < pos.second; j++ ){
           _c[i][j] =l._c[i][j];
       }
     }
@@ -49,7 +51,7 @@ laberint & laberint::operator=(const laberint & l) throw(error){
   return *this;
 }
 laberint::~laberint() throw(){
-  for(nat i = 1; i <= pos.first; i++){
+  for(nat i = 0; i < pos.first; i++){
         delete[] _c[i];
   }
   delete [] _c;
@@ -73,8 +75,8 @@ cambra laberint::operator()(const posicio & pos) const throw(error){
   cambra res;
   nat r_fila = pos.first;
   nat r_col = pos.second;
-  for(nat i = 1; i <= pos.first; i++){
-    for(nat j = 1; j <= pos.second; j++ ){
+  for(nat i = 0; i < pos.first; i++){
+    for(nat j = 0; j < pos.second; j++ ){
         if(_c[i][j] == _c[r_fila][r_col]){
           res = _c[i][j];
         }
@@ -124,8 +126,8 @@ void laberint::tanca_porta(paret p, const posicio & pos) throw(error){
 // Escriu el laberint a l'ostream (canal de sortida) os. El format per escriure
 // el laberint seguirà l'exposat a l'apartat 2.3.
 void laberint::print(std::ostream & os) const throw(){
-  for(nat i = 1; i <= pos.first; i++){
-    for(nat j = 1; j <= pos.second; j++ ){
+  for(nat i = 0; i < pos.first; i++){
+    for(nat j = 0; j < pos.second; j++ ){
       os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*') << '*' << '\n';
       os << (_c[i][j].porta_oberta(paret("oest")) ? ' ' : '*') << ' ';
       os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << '\n';

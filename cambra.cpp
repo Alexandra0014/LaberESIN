@@ -1,4 +1,7 @@
 #include "cambra.hpp"
+#include <iostream>
+
+using namespace std;
 
 // Construeix una cambra amb les portes als llocs indicats.
 // bool n = false, s = false, e = false, o=false -> no hay puertas
@@ -31,15 +34,13 @@ cambra & cambra::operator=(const cambra & c) throw(error){
   return *this;
 }
 
-cambra::~cambra() throw(){
-  delete[] this;
-}
+cambra::~cambra() throw(){}
 
 // Retorna si l'habitació té una porta oberta a la paret indicada.
 // oberta == true
 // En p nos dirá si es NORD,SUD,EST,OEST,NO_DIR
 bool cambra::porta_oberta(paret p) const throw(){
-  bool porta_open = true;
+  bool porta_open = false;
   if(p == 0) //NORD
   {
     porta_open = _porta[0];
@@ -133,12 +134,12 @@ bool cambra::operator!=(const cambra & c) const throw(){
 //   cout << (c1 < c2); // escriu 'true'
 //   cout << (c2 < c3); // escriu 'true'
 bool cambra::operator<(const cambra & c) const throw(){
-  int contT_nuestro, contT_suyo;
+  int contT_nuestro = 0, contT_suyo = 0;
   bool menor_que = false;
   bool parar = false;
   for (int i = 0; i < 4; i++){
     if(c._porta[i] == false) contT_suyo++;
-    else if(_porta[i] == false) contT_nuestro++;
+    if(_porta[i] == false) contT_nuestro++;
   }
   if(contT_nuestro > contT_suyo) menor_que = true;
   else if( contT_nuestro == contT_suyo){
