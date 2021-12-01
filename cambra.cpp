@@ -63,7 +63,6 @@ bool cambra::porta_oberta(paret p) const throw(){
 // Obre una nova porta a la paret indicada. Si la porta ja està oberta no
 // fa res. Es produeix un error si la paret és NO_DIR.
 void cambra::obre_porta(paret p) throw(error){
-
   if(p == 0) //NORD
   {
     _porta[0] = true;
@@ -81,6 +80,7 @@ void cambra::obre_porta(paret p) throw(error){
     _porta[3] = true;
 
   }else{
+
     throw error(ParetInexistent);
   }
 
