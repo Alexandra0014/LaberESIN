@@ -12,33 +12,49 @@
 ###!
 #init lab1x1 laberint 1 1
 #print
+1 1
+i: 0j: 0
 ***
 * *
-***##1 1
+***
+##1 1
 ##***
 ##* *
 ##***
 #init lab3x3 laberint 3 3
 #print
+3 3
+i: 0j: 0
 ***
 * *
-******
+***i: 0j: 1
+***
 * *
-******
+***i: 0j: 2
+***
 * *
-******
+***
+i: 1j: 0
+***
 * *
-******
+***i: 1j: 1
+***
 * *
-******
+***i: 1j: 2
+***
 * *
-******
+***
+i: 2j: 0
+***
 * *
-******
+***i: 2j: 1
+***
 * *
-******
+***i: 2j: 2
+***
 * *
-***##3 3
+***
+##3 3
 ##*******
 ##* * * *
 ##*******
@@ -48,27 +64,43 @@
 ##*******
 #init lab5x2 laberint 5 2
 #print
+5 2
+i: 0j: 0
 ***
 * *
-******
+***i: 0j: 1
+***
 * *
-******
+***
+i: 1j: 0
+***
 * *
-******
+***i: 1j: 1
+***
 * *
-******
+***
+i: 2j: 0
+***
 * *
-******
+***i: 2j: 1
+***
 * *
-******
+***
+i: 3j: 0
+***
 * *
-******
+***i: 3j: 1
+***
 * *
-******
+***
+i: 4j: 0
+***
 * *
-******
+***i: 4j: 1
+***
 * *
-***##5 2
+***
+##5 2
 ##*****
 ##* * *
 ##*****
@@ -82,27 +114,40 @@
 ##*****
 #init lab2x5 laberint 2 5
 #print
+2 5
+i: 0j: 0
 ***
 * *
-******
+***i: 0j: 1
+***
 * *
-******
+***i: 0j: 2
+***
 * *
-******
+***i: 0j: 3
+***
 * *
-******
+***i: 0j: 4
+***
 * *
-******
+***
+i: 1j: 0
+***
 * *
-******
+***i: 1j: 1
+***
 * *
-******
+***i: 1j: 2
+***
 * *
-******
+***i: 1j: 3
+***
 * *
-******
+***i: 1j: 4
+***
 * *
-***##2 5
+***
+##2 5
 ##***********
 ##* * * * * *
 ##***********
@@ -151,6 +196,7 @@ Error::laberint:30:El num de fils o cols es incorrecte.
 ###!
 #init lab_unic laberint ./laberint_3x3.txt
 #print
+0 0
 ##3 3
 ##*******
 ##*   * *
@@ -166,6 +212,7 @@ Error::laberint:30:El num de fils o cols es incorrecte.
 ###!
 #init lab_cicle laberint ./laberint_3x3_cicles.txt
 #print
+0 0
 ##3 3
 ##*******
 ##*     *
@@ -181,6 +228,7 @@ Error::laberint:30:El num de fils o cols es incorrecte.
 ###!
 #init lab_sense_portes laberint ./laberint_3x3_senseportes.txt
 #print
+0 0
 ##3 3
 ##*******
 ##* * * *
@@ -213,6 +261,7 @@ Error::laberint:30:El num de fils o cols es incorrecte.
 ###!
 #initcopy copia = lab_unic
 #copia print
+0 0
 ##3 3
 ##*******
 ##*   * *
@@ -224,6 +273,7 @@ Error::laberint:30:El num de fils o cols es incorrecte.
 #copia destroy
 #initcopy copia = lab_cicle
 #copia print
+0 0
 ##3 3
 ##*******
 ##*     *
@@ -235,6 +285,7 @@ Error::laberint:30:El num de fils o cols es incorrecte.
 #copia destroy
 #initcopy copia = lab_sense_portes
 #copia print
+0 0
 ##3 3
 ##*******
 ##* * * *
@@ -260,6 +311,7 @@ Error::laberint:30:El num de fils o cols es incorrecte.
 #init copia laberint 1 1
 #copia = lab_unic
 #copia print
+0 0
 ##3 3
 ##*******
 ##*   * *
@@ -270,6 +322,7 @@ Error::laberint:30:El num de fils o cols es incorrecte.
 ##*******
 #copia = lab_cicle
 #copia print
+0 0
 ##3 3
 ##*******
 ##*     *
@@ -287,6 +340,7 @@ Error::laberint:30:El num de fils o cols es incorrecte.
 ##100
 #copia = lab_sense_portes
 #copia print
+0 0
 ##3 3
 ##*******
 ##* * * *
@@ -408,6 +462,7 @@ Error::laberint:31:La posicio no existeix.
 #obre_porta_l S 1 1
 Error::laberint:31:La posicio no existeix.
 #print
+0 0
 ##3 3
 ##*******
 ##* * * *
@@ -419,6 +474,7 @@ Error::laberint:31:La posicio no existeix.
 #obre_porta_l S 1 1
 Error::laberint:31:La posicio no existeix.
 #print
+0 0
 ##3 3
 ##*******
 ##* * * *
@@ -430,6 +486,7 @@ Error::laberint:31:La posicio no existeix.
 #obre_porta_l N 2 1
 Error::laberint:31:La posicio no existeix.
 #print
+0 0
 ##3 3
 ##*******
 ##* * * *
@@ -441,6 +498,7 @@ Error::laberint:31:La posicio no existeix.
 #obre_porta_l O 2 2
 Error::laberint:31:La posicio no existeix.
 #print
+0 0
 ##3 3
 ##*******
 ##* * * *
@@ -452,6 +510,7 @@ Error::laberint:31:La posicio no existeix.
 #obre_porta_l O 3 3
 Error::laberint:31:La posicio no existeix.
 #print
+0 0
 ##3 3
 ##*******
 ##* * * *
@@ -463,6 +522,7 @@ Error::laberint:31:La posicio no existeix.
 #obre_porta_l E 3 1
 Error::laberint:31:La posicio no existeix.
 #print
+0 0
 ##3 3
 ##*******
 ##* * * *
