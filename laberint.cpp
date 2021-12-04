@@ -24,6 +24,35 @@ laberint::laberint(nat num_fil, nat num_col) throw(error){
 // El format de l'istream seguirà l'exposat a l'apartat 2.3. Es presuposa que
 // el laberint és correcte.
 laberint::laberint(std::istream & is) throw(error){
+  is >> posi.first >> posi.second;
+  laberint(posi.first,posi.second); //construim lab tot tencat
+  for(nat i = 0; i < posi.first; i++){ //nem obrint portes
+    for(nat j = 0; j < posi.second; j++ ){
+      if(i == 0){
+        _c[i][j].tanca_porta(paret("sud"));
+      }else if(i == posi.first-1){
+        _c[i][j].tanca_porta(paret("nord"));
+      }
+      else if (j == 0){
+        _c[i][j].tanca_porta(paret("oest"));
+      }else if(j == posi.second-1){
+        _c[i][j].tanca_porta(paret("est"));
+      }
+      else{
+        string s;
+        is>>s;
+        if(j%2 != 0){ //columna impar OJO N-S
+          if( s == " ") _c[i][j].obre_porta(paret("nord"));
+        }else{  //columna par + fila IMPAR OJO O-E
+          if(i % 2 != 0){  //fila impar
+              if(s == " ") _c[i][j].obre_porta(paret("oest"));
+          }
+        }
+
+      }
+
+    }
+  }
 
 }
 
@@ -156,14 +185,23 @@ void laberint::print(std::ostream & os) const throw(){
   os << posi.first << " " << posi.second <<'\n';
   for(nat i = 0; i < posi.first; i++){
     for(nat j = 0; j < posi.second; j++ ){
-      os<<"i: "<<i<<"j: "<<j<<'\n';
-      os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*') << '*' << '\n';
-      os << (_c[i][j].porta_oberta(paret("oest")) ? ' ' : '*') << ' ';
-      os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << '\n';
-      os << '*' << (_c[i][j].porta_oberta(paret("sud")) ? ' ' : '*') << '*';
+      if(i == 0 || i == posi.first-1) os<<"*";
+      else if (j == 0 || j == posi.second-1) os<<"*";
+      else{
+        if(j%2 != 0){ //columna impar OJO N-S
+            os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*') << '*' << endl;
+            os << '*' << (_c[i][j].porta_oberta(paret("sud")) ? ' ' : '*') << '*';
+        }else{  //columna par + fila IMPAR OJO O-E
+          if(i % 2 != 0){  //fila impar
+            os << (_c[i][j].porta_oberta(paret("oest")) ? ' ' : '*') << ' ';
+            os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << endl;
+          }
+        }
+
+      }
 
     }
     os<<'\n';
   }
-  //os<<'\n';
+
 }
