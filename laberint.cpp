@@ -101,6 +101,7 @@ nat laberint::num_files() const throw(){
 }
 nat laberint::num_columnes() const throw(){
   return posi.second;
+	
 }
 
 // Retorna la cambra situada a la posició especificada per pos.
