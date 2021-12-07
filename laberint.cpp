@@ -182,26 +182,34 @@ void laberint::tanca_porta(paret p, const posicio & pos) throw(error){
 // Escriu el laberint a l'ostream (canal de sortida) os. El format per escriure
 // el laberint seguirà l'exposat a l'apartat 2.3.
 void laberint::print(std::ostream & os) const throw(){
-  os << posi.first << " " << posi.second <<'\n';
-  for(nat i = 0; i < posi.first; i++){
-    for(nat j = 0; j < posi.second; j++ ){
-      if(i == 0 || i == posi.first-1) os<<"*";
-      else if (j == 0 || j == posi.second-1) os<<"*";
-      else{
-        if(j%2 != 0){ //columna impar OJO N-S
-            os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*') << '*' << endl;
-            os << '*' << (_c[i][j].porta_oberta(paret("sud")) ? ' ' : '*') << '*';
-        }else{  //columna par + fila IMPAR OJO O-E
-          if(i % 2 != 0){  //fila impar
-            os << (_c[i][j].porta_oberta(paret("oest")) ? ' ' : '*') << ' ';
-            os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << endl;
-          }
+ 
+       
+        for (int i = 0; i < posi.first; i++){
+            for(int j=0; j<posi.second; j++){
+		//os<<"i:"<<i<<"j:"<<j;	
+                os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*');
+            }
+            os<<'*'<<'\n'<<"* ";
+            for(int j=0; j<posi.second; j++){
+               //os<<"I:"<<i<<"J:"<<j;		
+                os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << ' ';
+               
+            }
+            os<<'\n';
+            
+            
         }
-
-      }
-
-    }
-    os<<'\n';
-  }
-
+        //os << '*' << (_c[0][0].porta_oberta(paret("sud")) ? ' ' : '*') << '*';
+        //os<< string(cont, '*') <<endl;
+        
+	/*for (int i = 0; i < posi.first; i++){
+            for(int j=0; j<posi.second; j++){
+		//os<<"i:"<<i<<"j:"<<j;
+		if(contador%2 == 0){
+		os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*');
+		if (j == posi.second-1) contador++;
+		}
+		
+	}
+	}	/*els*/
 }
