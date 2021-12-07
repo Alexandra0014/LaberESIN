@@ -23,7 +23,32 @@ laberint::laberint(nat num_fil, nat num_col) throw(error){
 // el laberint és correcte.
 laberint::laberint(std::istream & is) throw(error){
 
-
+int fila = 0, columna = 0;
+  is >> fila >> columna;
+  posi.first=fila;
+  posi.second=columna;
+  
+  cout<<posi.first<<'\n';
+  cout<<posi.second<<'\n';
+  string s;
+  is>>s;
+  string aux = string(posi.second*2+1, '*');
+  cout<<aux;
+  
+  /*for (int i = 0; i < posi.first; i++){
+  	for (int j = 0; j < posi.second; j++){
+  	if(s == aux) 
+  	}*/
+  	
+  	
+  	for (int i = 0; i < posi.first; i++){
+			for (int j = 0; j < posi.second; j++){
+			if(s == aux) {
+			laberint(posi.first, posi.second)._c[i][j].tanca_porta(paret("nord"));
+			cout<<i<<" "<<j<<endl;
+			}
+  	}
+  	}
 }
 
 // Constructora per còpia, assignació i destructora.
