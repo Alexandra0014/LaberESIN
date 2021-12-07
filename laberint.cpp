@@ -1,7 +1,5 @@
 #include "laberint.hpp"
-#include <iostream>
 
-using namespace std;
 
 // Constructora d'un laberint buit sense excavar (sense cap porta oberta)
 // de la mida indicada. Totes les cambres del laberint no tenen cap porta.
@@ -24,35 +22,7 @@ laberint::laberint(nat num_fil, nat num_col) throw(error){
 // El format de l'istream seguirà l'exposat a l'apartat 2.3. Es presuposa que
 // el laberint és correcte.
 laberint::laberint(std::istream & is) throw(error){
-  is >> posi.first >> posi.second;
-  laberint(posi.first,posi.second); //construim lab tot tencat
-  for(nat i = 0; i < posi.first; i++){ //nem obrint portes
-    for(nat j = 0; j < posi.second; j++ ){
-      if(i == 0){
-        _c[i][j].tanca_porta(paret("sud"));
-      }else if(i == posi.first-1){
-        _c[i][j].tanca_porta(paret("nord"));
-      }
-      else if (j == 0){
-        _c[i][j].tanca_porta(paret("oest"));
-      }else if(j == posi.second-1){
-        _c[i][j].tanca_porta(paret("est"));
-      }
-      else{
-        string s;
-        is>>s;
-        if(j%2 != 0){ //columna impar OJO N-S
-          if( s == " ") _c[i][j].obre_porta(paret("nord"));
-        }else{  //columna par + fila IMPAR OJO O-E
-          if(i % 2 != 0){  //fila impar
-              if(s == " ") _c[i][j].obre_porta(paret("oest"));
-          }
-        }
 
-      }
-
-    }
-  }
 
 }
 
@@ -101,7 +71,7 @@ nat laberint::num_files() const throw(){
 }
 nat laberint::num_columnes() const throw(){
   return posi.second;
-	
+
 }
 
 // Retorna la cambra situada a la posició especificada per pos.
@@ -121,7 +91,6 @@ cambra laberint::operator()(const posicio & pos) const throw(error){
 
   for(nat i = 0; i < pos.first; i++){
     for(nat j = 0; j < pos.second; j++ ){
-      cout<<"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"<<endl;
         if(_c[i][j] == _c[r_fila-1][r_col-1]){
           res = _c[i][j];
         }else{
@@ -183,26 +152,22 @@ void laberint::tanca_porta(paret p, const posicio & pos) throw(error){
 // Escriu el laberint a l'ostream (canal de sortida) os. El format per escriure
 // el laberint seguirà l'exposat a l'apartat 2.3.
 void laberint::print(std::ostream & os) const throw(){
+  os<<posi.first<<" "<<posi.second<<'\n';
+  for (int i = 0; i < posi.first; i++){
+  	for(int j=0; j<posi.second; j++){
+  	   os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*');
+  	}
+  	os<<'*'<<'\n'<< (_c[i][0].porta_oberta(paret("oest")) ? ' ' : '*') << ' ';
+  	for(int j=0; j<posi.second; j++){
+       if (j != posi.second-1){
+  	      os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << ' ';
+       }else{
+         os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*');
+       }
+  	}
+  	os<<'\n';
+  }
 
-os<<posi.first<<" "<<posi.second<<'\n';
-for (int i = 0; i < posi.first; i++){
-	for(int j=0; j<posi.second; j++){
-
-	os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*');
-
-	}
-	os<<'*'<<'\n'<< (_c[i][0].porta_oberta(paret("oest")) ? ' ' : '*') << ' ';
-	
-	for(int j=0; j<posi.second; j++){
-
-	os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << ' ';
-
-	}
-	os<<'\n';
-	
-
-}
- 
- os<< string(posi.second*2+1, (_c[posi.first-1][posi.second-1].porta_oberta(paret("sud")) ? ' ' : '*')) <<'\n';      
+   os<< string(posi.second*2+1, (_c[posi.first-1][posi.second-1].porta_oberta(paret("sud")) ? ' ' : '*')) <<'\n';
 
 }
