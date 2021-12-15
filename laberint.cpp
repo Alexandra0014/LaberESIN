@@ -78,17 +78,23 @@ laberint::laberint(const laberint & l) throw(error){
 
 laberint & laberint::operator=(const laberint & l) throw(error){
   if(this != &l){
-    posi.first = l.posi.first;
-    posi.second = l.posi.second;
-    _c = new cambra* [posi.first];
-    for(nat i = 0; i < posi.first; i++){
-      _c[i] = new cambra[posi.second];
+    if(posi.first != l.posi.first ||  posi.second != l.posi.second){
+      for(nat i = 0; i < posi.first; i++){
+            delete[] _c[i];
+      }
+      delete[] _c;
     }
-    for(nat i = 0; i < posi.first; i++){
-        for(nat j = 0; j < posi.second; j++){
-          _c[i][j] = l._c[i][j];
-        }
-    }
+      posi.first = l.posi.first;
+      posi.second = l.posi.second;
+      _c = new cambra* [posi.first];
+      for(nat i = 0; i < posi.first; i++){
+          _c[i] = new cambra[posi.second];
+      }
+      for(nat i = 0; i < posi.first; i++){
+          for(nat j = 0; j < posi.second; j++){
+            _c[i][j] = l._c[i][j];
+          }
+      }
   }
   return *this;
 }
