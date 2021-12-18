@@ -1,4 +1,4 @@
-OPCIONS = -O0 -Wall -ansi  -Wextra  -Wno-sign-compare -std=c++11 -g
+OPCIONS = -O0 -Wall -ansi  -Wextra -Wno-sign-compare -Wno-implicit-fallthrough -std=c++11 -g
 
 program.exe: driver_maze.o cambra.o laberint.o teseus.o dedalus.o check.o
 	g++ -o program.exe driver_maze.o cambra.o laberint.o teseus.o dedalus.o check.o -lesin
