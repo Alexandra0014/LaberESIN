@@ -1,6 +1,7 @@
-nat size;   //numero màxim de GRUPS
+nat max_grup;   //numero màxim de GRUPS
 nat n_max;  //numero màxim de NODES
-nat equilibri;
+//nat equilibri;
+
 struct node {
   T _k;      // Clau
   node* _esq;   // fill esquerre
@@ -19,3 +20,5 @@ static node* insereix_avl(node *n, const T &k);
 static nat altura_max(node *n);
 static T max(T a, T b);
 static nat factor_eq(node *n);
+static node* rightRotate(node *y);
+static node* leftRotate(node *x);

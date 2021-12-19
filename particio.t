@@ -3,13 +3,13 @@
 //Inicialización
 template <typename T>
 particio<T>::node::node (const T &k, node* esq, node* dret) :
- _k(k), _esq(esq), _dret(dret), _n(1) {
+ _k(k), _esq(esq), _dret(dret), n_elem(1) {
 }
 
 // Construeix una particio amb n elements com a màxim.
 template <typename T>
 particio<T>::particio(nat n) throw(error){
-
+    n_max = n;
 }
 
 // Constructora per còpia, assignació i destructora.
@@ -41,18 +41,57 @@ nat particio<T>::altura_max(node *n){
     if (n == NULL) return 0;
     return n->alt_max;
 }
+//ROTACIONS
+//Girar a la dreta el subarbre arrelat amb y
+template <typename T>
+typename particio<T>::node* particio<T>::rightRotate(node *y){
+    node *x = y->_esq;
+    node *aux = x->_dret;
+
+    // Perform rotation
+    x->_dret = y;
+    y->_esq = aux;
+
+    // Update heights
+    y->alt_max = max(altura_max(y->_esq),
+                    altura_max(y->_dret)) + 1;
+    x->alt_max = max(altura_max(x->_esq),
+                    altura_max(x->_dret)) + 1;
+
+    // Return new root
+    return x;
+}
+//Girar a la esquerra el subarbre arrelat amb x
+template <typename T>
+typename particio<T>::node* particio<T>::leftRotate(node *x){
+    node *y = x->_dret;
+    node *aux = y->_esq;
+
+    // Perform rotation
+    y->_esq = x;
+    x->_dret = aux;
+
+    // Update heights
+    x->alt_max = max(altura_max(x->_esq),
+                    altura_max(x->_dret)) + 1;
+    y->alt_max = max(altura_max(y->_esq),
+                    altura_max(y->_dret)) + 1;
+
+    // Return new root
+    return y;
+}
 
 // Metode auxiliar d'afegir
 template <typename T>
 typename particio<T>::node* particio<T>::insereix_avl(node *n, const T &k){
     //BST
     if (n == NULL){
-        n_elem++;
+        n->n_elem++;
         return new node(k);
     }
     else{
         if (k < n->_k) {
-            n->_esq = insereix_avl(n->_esq, k;
+            n->_esq = insereix_avl(n->_esq, k);
         }else if (k > n->_k) {
             n->_dret = insereix_avl(n->_dret, k);
         }
@@ -60,9 +99,31 @@ typename particio<T>::node* particio<T>::insereix_avl(node *n, const T &k){
     //Actualització altura maxima del node anterior
     n->alt_max = 1 + max(altura_max(n->_esq),altura_max(n->_dret));
     // Factor d'equilibri del node anterior pero comprovar si esta desequilibrat
-    equilibri = factor_eq(n);
-    // casos:
+    nat equilibri = factor_eq(n);
 
+    // casos si està descompensat
+
+    // Left Left Case
+    if (equilibri > 1 && k < n->_esq->_k)
+        return rightRotate(n);
+
+    // Right Right Case
+    if (equilibri < -1 && k > n->_dret->_k)
+        return leftRotate(n);
+
+    // Left Right Case
+    if (equilibri > 1 && k > n->_esq->_k)
+    {
+        n->_esq = leftRotate(n->_esq);
+        return rightRotate(n);
+    }
+
+    // Right Left Case
+    if (equilibri < -1 && k < n->_dret->_k)
+    {
+        n->_dret = rightRotate(n->_dret);
+        return leftRotate(n);
+    }
 
 return n;
 }
@@ -73,7 +134,7 @@ return n;
 // número màxim d'elements abans d'afegir aquest nou.
 template <typename T>
 void particio<T>::afegir(const T &x) throw(error){
-    if(n_max == n_elem) throw error(ParticioPlena);
+    if(n_max == _arrel->n_elem) throw error(ParticioPlena);
     else _arrel = insereix_avl(_arrel, x);
 }
 
@@ -95,13 +156,13 @@ bool particio<T>::mateix_grup(const T & x, const T & y) const throw(error){
 // Retorna el número de grups que té la particio.
 template <typename T>
 nat particio<T>::size() const throw(){
-  return size;
+  return max_grup;
 }
 
 // Retorna el número d'elements que té la particio.
 template <typename T>
 nat particio<T>::num_elements() const throw(){
-  return n_elem;
+  return _arrel->n_elem;
 }
 
 // Retorna el número màxim d'elements que pot tenir la particio.
