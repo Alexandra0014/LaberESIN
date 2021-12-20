@@ -1,16 +1,33 @@
 #include "particio.hpp"
+#include<iostream>
+using namespace std;
 
 //Inicialización
 template <typename T>
 particio<T>::node::node (const T &k, node* esq, node* dret) :
- _k(k), _esq(esq), _dret(dret), n_elem(1) {
+ _k(k), _esq(esq), _dret(dret) {
+}
+
+//auxiliar constructora
+template <typename T>
+typename particio<T>::node* particio<T>::const_aux(node* n, nat cont){
+    if(n_max != cont){
+        cont++;
+        n = new node(NULL);
+        n->_esq = const_aux(n -> _esq,cont);
+        n->_dret = const_aux(n -> _dret,cont);
+        n->alt_max += n->alt_max;
+    }
+    return n;
 }
 
 // Construeix una particio amb n elements com a màxim.
 template <typename T>
 particio<T>::particio(nat n) throw(error){
     n_max = n;
+   _arrel= const_aux(_arrel,0);
 }
+
 
 // Constructora per còpia, assignació i destructora.
 template <typename T>
@@ -85,11 +102,15 @@ typename particio<T>::node* particio<T>::leftRotate(node *x){
 template <typename T>
 typename particio<T>::node* particio<T>::insereix_avl(node *n, const T &k){
     //BST
+    //cout<<"K: "<<k<<endl;
     if (n == NULL){
-        n->n_elem++;
+
+        n_elem ++;
+        //n -> _k = k;
         return new node(k);
     }
     else{
+        //cout<<"n-> _k: "<<n->_k<<endl;
         if (k < n->_k) {
             n->_esq = insereix_avl(n->_esq, k);
         }else if (k > n->_k) {
@@ -134,8 +155,10 @@ return n;
 // número màxim d'elements abans d'afegir aquest nou.
 template <typename T>
 void particio<T>::afegir(const T &x) throw(error){
-    if(n_max == _arrel->n_elem) throw error(ParticioPlena);
-    else _arrel = insereix_avl(_arrel, x);
+    if(n_max == n_elem) throw error(ParticioPlena);
+    else{
+        _arrel = insereix_avl(_arrel, x);
+    }
 }
 
 // Uneix els dos grups als quals pertanyen aquests dos elements. Si tots dos
@@ -162,7 +185,7 @@ nat particio<T>::size() const throw(){
 // Retorna el número d'elements que té la particio.
 template <typename T>
 nat particio<T>::num_elements() const throw(){
-  return _arrel->n_elem;
+  return n_elem;
 }
 
 // Retorna el número màxim d'elements que pot tenir la particio.

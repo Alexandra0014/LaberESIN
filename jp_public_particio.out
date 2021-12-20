@@ -19,3 +19,17 @@
 #init p0 particio<int> 0
 ###! Intentem inserir element sobrepassant maxim
 #p0 afegir 1
+Error::particio<T>:41:Particio plena.
+##Error::particio<T>:41:Particio plena.
+###!
+###! Constructor particio amb 1 element
+#init p1 particio<int> 1
+#p1 afegir 3
+###! Intentem inserir element sobrepassant maxim
+#p1 afegir 1
+Error::particio<T>:41:Particio plena.
+##Error::particio<T>:41:Particio plena.
+###!
+###! Constructor particio amb 2 elements pero espai per 9 elements
+#init p2 particio<int> 9
+#p2 afegir 3
