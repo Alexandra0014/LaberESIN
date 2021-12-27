@@ -19,17 +19,629 @@
 #init p0 particio<int> 0
 ###! Intentem inserir element sobrepassant maxim
 #p0 afegir 1
-Error::particio<T>:41:Particio plena.
+TENGOOOOOOOOO: 0
+n_elem: 1
 ##Error::particio<T>:41:Particio plena.
 ###!
 ###! Constructor particio amb 1 element
 #init p1 particio<int> 1
 #p1 afegir 3
+TENGOOOOOOOOO: 0
+n_elem: 1
 ###! Intentem inserir element sobrepassant maxim
 #p1 afegir 1
-Error::particio<T>:41:Particio plena.
+TENGOOOOOOOOO: 3
+n_elem: 2
 ##Error::particio<T>:41:Particio plena.
 ###!
 ###! Constructor particio amb 2 elements pero espai per 9 elements
 #init p2 particio<int> 9
 #p2 afegir 3
+TENGOOOOOOOOO: 0
+n_elem: 1
+#p2 afegir 7
+TENGOOOOOOOOO: 3
+n_elem: 2
+###!
+###! Constructor particio amb multiples elements
+#init p9 particio<int> 9
+#p9 afegir 3
+TENGOOOOOOOOO: 0
+n_elem: 1
+#p9 afegir 79
+TENGOOOOOOOOO: 3
+n_elem: 2
+#p9 afegir 5
+TENGOOOOOOOOO: 79
+n_elem: 3
+TENGOOOOOOOOO: 3
+n_elem: 3
+#p9 afegir 10
+TENGOOOOOOOOO: 5
+n_elem: 4
+TENGOOOOOOOOO: 3
+n_elem: 4
+#p9 afegir 2
+TENGOOOOOOOOO: 0
+n_elem: 5
+TENGOOOOOOOOO: 3
+n_elem: 5
+#p9 afegir 9
+TENGOOOOOOOOO: 5
+n_elem: 6
+TENGOOOOOOOOO: 10
+n_elem: 6
+TENGOOOOOOOOO: 3
+n_elem: 6
+#p9 afegir 4
+TENGOOOOOOOOO: 5
+n_elem: 7
+TENGOOOOOOOOO: 10
+n_elem: 7
+TENGOOOOOOOOO: 3
+n_elem: 7
+#p9 afegir 12
+TENGOOOOOOOOO: 79
+n_elem: 8
+TENGOOOOOOOOO: 10
+n_elem: 8
+TENGOOOOOOOOO: 3
+n_elem: 8
+#p9 afegir 15
+TENGOOOOOOOOO: 12
+n_elem: 9
+TENGOOOOOOOOO: 10
+n_elem: 9
+TENGOOOOOOOOO: 3
+n_elem: 9
+###! Intentem inserir element repetit
+#p9 afegir 5
+TENGOOOOOOOOO: 5
+n_elem: 9
+TENGOOOOOOOOO: 10
+n_elem: 9
+TENGOOOOOOOOO: 3
+n_elem: 9
+###! Intentem inserir element sobrepassant maxim
+#p9 afegir 1
+TENGOOOOOOOOO: 2
+n_elem: 10
+TENGOOOOOOOOO: 3
+n_elem: 10
+##Error::particio<T>:41:Particio plena.
+###!
+###!---------------------------------------------------------------------
+###1.2 Consultora numero blocs
+###!---------------------------------------------------------------------
+###!
+#p0 size
+3636105632
+##0
+#p1 size
+0
+##1
+#p2 size
+0
+##2
+#p9 size
+0
+##9
+###!
+###!---------------------------------------------------------------------
+###1.3 Consultora numero elements i numero maxim
+###!---------------------------------------------------------------------
+###!
+#p0 num_elems
+1
+##0
+#p0 num_maxim
+0
+##0
+###!
+###!
+#p1 num_elems
+2
+##1
+#p1 num_maxim
+1
+##1
+###!
+###!
+#p2 num_elems
+2
+##2
+#p2 num_maxim
+9
+##9
+###!
+###!
+#p9 num_elems
+10
+##9
+#p9 num_maxim
+9
+##9
+###!
+###!---------------------------------------------------------------------
+###1.4 Unio de blocs
+###!---------------------------------------------------------------------
+###!
+#p0 unir 0 0
+00
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p0 unir 1 1
+11
+##Error::particio<T>:40:L'element no pertany a la particio.
+###!
+###!
+#p1 unir 0 1
+01
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p1 unir 3 0
+30
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p1 unir 2 3
+23
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p1 unir 3 3
+33
+###!
+###!
+#p2 unir 0 7
+07
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p2 unir 7 4
+74
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p2 unir 7 7
+77
+#p2 unir 7 3
+73
+#p2 unir 3 7
+37
+###!
+###!
+#p9 unir 0 5
+05
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p9 unir 5 6
+56
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p9 unir 12 3
+123
+#p9 unir 5 9
+59
+#p9 unir 15 5
+155
+###!
+###!---------------------------------------------------------------------
+###1.5 Elements pertanyen al mateix bloc
+###!---------------------------------------------------------------------
+###!
+#p0 equiv 0 0
+00
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p0 equiv 1 1
+11
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+###!
+###!
+#p1 equiv 0 1
+01
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p1 equiv 3 0
+30
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p1 equiv 2 3
+23
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p1 equiv 3 3
+33
+true
+##true
+###!
+###!
+#p2 equiv 0 7
+07
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p2 equiv 7 4
+74
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p2 equiv 7 7
+77
+true
+##true
+#p2 equiv 7 3
+73
+true
+##true
+#p2 equiv 3 7
+37
+true
+##true
+###!
+###!
+#p9 equiv 0 5
+05
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p9 equiv 5 6
+56
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p9 equiv 12 3
+123
+true
+##true
+#p9 equiv 3 12
+312
+true
+##true
+#p9 equiv 5 9
+59
+true
+##true
+#p9 equiv 15 5
+155
+true
+##true
+#p9 equiv 9 15
+915
+true
+##true
+#p9 equiv 15 9
+159
+true
+##true
+#p9 equiv 2 2
+22
+true
+##true
+#p9 equiv 15 15
+1515
+true
+##true
+#p9 equiv 2 3
+23
+true
+##false
+#p9 equiv 5 12
+512
+true
+##false
+#p9 equiv 10 15
+1015
+true
+##false
+#p9 equiv 5 4
+54
+true
+##false
+###!
+###!---------------------------------------------------------------------
+###1.6 Consultora numero blocs (despres de fer unions)
+###!---------------------------------------------------------------------
+###!
+#p0 size
+3636105632
+##0
+#p1 size
+0
+##1
+#p2 size
+0
+##1
+#p9 size
+0
+##6
+###!
+###!---------------------------------------------------------------------
+###1.7 Consultora numero elements i numero maxim sobre 
+###!   copies de particio (despres de fer unions)
+###!---------------------------------------------------------------------
+###!
+#p0 num_elems
+1
+##0
+#p0 num_maxim
+0
+##0
+###!
+###!
+#p1 num_elems
+2
+##1
+#p1 num_maxim
+1
+##1
+###!
+###!
+#p2 num_elems
+2
+##2
+#p2 num_maxim
+9
+##9
+###!
+###!
+#p9 num_elems
+10
+##9
+#p9 num_maxim
+9
+##9
+###!
+###!---------------------------------------------------------------------
+###2 Constructors per copia, destructores i assignacio
+###!---------------------------------------------------------------------
+###!
+###!---------------------------------------------------------------------
+###2.1 Inicialitzacions
+###!---------------------------------------------------------------------
+###!
+#initcopy pp0 = p0
+#initcopy pp1 = p1
+#initcopy pp2 = p2
+#initcopy pp9 = p9
+#p0 destroy
+#p1 destroy
+#p2 destroy
+#p9 destroy
+#init p0 particio<int> 10
+#init p1 particio<int> 10
+#init p2 particio<int> 10
+#init p9 particio<int> 10
+#p0 = pp0
+#p1 = pp1
+#p2 = pp2
+#p9 = pp9
+#pp0 destroy
+#pp1 destroy
+#pp2 destroy
+#pp9 destroy
+###!
+###!---------------------------------------------------------------------
+###2.2 Consultora numero blocs sobre copies de particio
+###!---------------------------------------------------------------------
+###!
+#p0 size
+3636132624
+##0
+#p1 size
+3636105632
+##1
+#p2 size
+3636117280
+##1
+#p9 size
+0
+##6
+###!
+###!---------------------------------------------------------------------
+###2.3 Consultora numero elements i numero maxim sobre copies de particio
+###!---------------------------------------------------------------------
+###!
+#p0 num_elems
+0
+##0
+#p0 num_maxim
+10
+##0
+###!
+###!
+#p1 num_elems
+0
+##1
+#p1 num_maxim
+10
+##1
+###!
+###!
+#p2 num_elems
+0
+##2
+#p2 num_maxim
+10
+##9
+###!
+###!
+#p9 num_elems
+0
+##9
+#p9 num_maxim
+10
+##9
+###!
+###!---------------------------------------------------------------------
+###2.4 Unio de blocs sobre copies de particio
+###!---------------------------------------------------------------------
+###!
+#p9 unir 0 5
+05
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p9 unir 5 6
+56
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p9 unir 4 2
+42
+#p9 unir 2 9
+29
+###!
+###!---------------------------------------------------------------------
+###2.5 Elements pertanyen al mateix bloc sobre copies de particio
+###!---------------------------------------------------------------------
+###!
+#p0 equiv 0 0
+00
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p0 equiv 1 1
+11
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+###!
+###!
+#p1 equiv 0 1
+01
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p1 equiv 3 0
+30
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p1 equiv 2 3
+23
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p1 equiv 3 3
+33
+true
+##true
+###!
+###!
+#p2 equiv 0 7
+07
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p2 equiv 7 4
+74
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p2 equiv 7 7
+77
+true
+##true
+#p2 equiv 7 3
+73
+true
+##true
+#p2 equiv 3 7
+37
+true
+##true
+###!
+###!
+#p9 equiv 0 5
+05
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p9 equiv 5 6
+56
+true
+##Error::particio<T>:40:L'element no pertany a la particio.
+#p9 equiv 12 3
+123
+true
+##true
+#p9 equiv 3 12
+312
+true
+##true
+#p9 equiv 5 9
+59
+true
+##true
+#p9 equiv 15 5
+155
+true
+##true
+#p9 equiv 9 15
+915
+true
+##true
+#p9 equiv 15 9
+159
+true
+##true
+#p9 equiv 2 2
+22
+true
+##true
+#p9 equiv 15 15
+1515
+true
+##true
+#p9 equiv 2 3
+23
+true
+##false
+#p9 equiv 5 12
+512
+true
+##false
+#p9 equiv 10 15
+1015
+true
+##false
+#p9 equiv 5 4
+54
+true
+##true
+###!
+###!---------------------------------------------------------------------
+###2.6 Consultora numero blocs (despres de fer unions)
+###!---------------------------------------------------------------------
+###!
+#p0 size
+3636132624
+##0
+#p1 size
+3636105632
+##1
+#p2 size
+3636117280
+##1
+#p9 size
+0
+##4
+###!
+###!---------------------------------------------------------------------
+###2.7 Consultora numero elements i numero maxim sobre 
+###!   copies de particio (despres de fer unions)
+###!---------------------------------------------------------------------
+###!
+#p0 num_elems
+0
+##0
+#p0 num_maxim
+10
+##0
+###!
+###!
+#p1 num_elems
+0
+##1
+#p1 num_maxim
+10
+##1
+###!
+###!
+#p2 num_elems
+0
+##2
+#p2 num_maxim
+10
+##9
+###!
+###!
+#p9 num_elems
+0
+##9
+#p9 num_maxim
+10
+##9
+###!
+#p0 destroy
+#p1 destroy
+#p2 destroy
+#p9 destroy
+###!
+###! Fi del joc de proves de particio
+###!

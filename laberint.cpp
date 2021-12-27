@@ -121,13 +121,13 @@ nat laberint::num_columnes() const throw(){
 //   cambra c = l(pos); --> Se nombra la cabmra en tal pos.
 // Es produeix un error si la posició donada no existeix al laberint.
 cambra laberint::operator()(const posicio & pos) const throw(error){
-  nat fila = pos.first-1;
-  nat col = pos.second-1;
+  int fila =  (int) pos.first-1;
+  int col =  (int) pos.second-1;
 
   cambra res;
-  if(fila >= 0 && fila < posi.first && col >= 0 && col < posi.second){
-    for(nat i = 0; i < posi.first; i++){
-        for(nat j = 0; j < posi.second; j++){
+  if(fila >= 0 && fila < (int)posi.first && col >= 0 && col < (int)posi.second){
+    for(int i = 0; i < (int)posi.first; i++){
+        for(int j = 0; j < (int)posi.second; j++){
             if(_c[i][j] == _c[fila][col]){
               res = _c[fila][col];
             }
@@ -145,16 +145,16 @@ cambra laberint::operator()(const posicio & pos) const throw(error){
 // si la posició no existeix o no es pot obrir una porta en la direcció
 // indicada perquè dóna a l'exterior.
 void laberint::obre_porta(paret p, const posicio & pos) throw(error){ //REVISAR CONDICIONES
-  nat fila = pos.first-1;
-  nat col = pos.second-1;
-  if(fila >= 0 && fila < posi.first && col >= 0 && col < posi.second){
-    for(nat i = 0; i < posi.first; i++){
-        for(nat j = 0; j < posi.second; j++){
+  int fila = (int)pos.first-1;
+  int col = (int)pos.second-1;
+  if(fila >= 0 && fila < (int)posi.first && col >= 0 && col < (int)posi.second){
+    for(int i = 0; i < (int)posi.first; i++){
+        for(int j = 0; j < (int)posi.second; j++){
           //BORDES
            if(fila == 0 && p == 0) throw error(PortaExterior);
-           else if(fila == posi.first-1 && p == 2) throw error(PortaExterior);
+           else if(fila == (int)posi.first-1 && p == 2) throw error(PortaExterior);
            else if(col == 0 && p == 3) throw error(PortaExterior);
-           else if(col == posi.second-1 && p == 1) throw error(PortaExterior);
+           else if(col == (int)posi.second-1 && p == 1) throw error(PortaExterior);
            else {
              if( i == fila && j == col){
                _c[i][j].obre_porta(p);
@@ -177,18 +177,18 @@ void laberint::obre_porta(paret p, const posicio & pos) throw(error){ //REVISAR 
 // També tanca la porta corresponent en la cambra adjacent. Es produeix un error
 // si la posició no existeix.
 void laberint::tanca_porta(paret p, const posicio & pos) throw(error){
-  nat fila = pos.first-1;
-  nat col = pos.second-1;
-  if(fila >= 0 && fila < posi.first && col >= 0 && col < posi.second){
-    for(nat i = 0; i < posi.first; i++){
-        for(nat j = 0; j < posi.second; j++){
+  int fila = (int)pos.first-1;
+  int col = (int)pos.second-1;
+  if(fila >= 0 && fila < (int)posi.first && col >= 0 && col < (int)posi.second){
+    for(int i = 0; i < (int)posi.first; i++){
+        for(int j = 0; j < (int)posi.second; j++){
 
             if( i == fila && j == col){
                _c[i][j].tanca_porta(p);
                //parets adjacents
                if(p == 0) _c[i+1][j].tanca_porta(p+2);
                else if( p == 1) _c[i][j+1].tanca_porta(p+2);
-               else if(p == 2 && fila != posi.first-1) _c[i+1][j].tanca_porta(p-2);
+               else if(p == 2 && fila != (int)posi.first-1) _c[i+1][j].tanca_porta(p-2);
                else if (p == 3) _c[i][j-1].tanca_porta(p-2);
              }
         }
@@ -203,15 +203,15 @@ void laberint::tanca_porta(paret p, const posicio & pos) throw(error){
 // el laberint seguirà l'exposat a l'apartat 2.3.
 void laberint::print(std::ostream & os) const throw(){
 
-os<<posi.first<<" "<<posi.second<<'\n';
-for (int i = 0; i < posi.first; i++){
-	for(int j=0; j<posi.second; j++){
+os<< (int)posi.first<<" "<<(int)posi.second<<'\n';
+for (int i = 0; i < (int)posi.first; i++){
+	for(int j=0; j<(int)posi.second; j++){
 	   os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*');
 	}
 	os<<'*'<<'\n'<< (_c[i][0].porta_oberta(paret("oest")) ? ' ' : '*') << ' ';
 
-	for(int j=0; j<posi.second; j++){
-    if(j == posi.second-1){
+	for(int j=0; j<(int)posi.second; j++){
+    if(j == (int)posi.second-1){
       os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*');
     }else{
        os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << ' ';
@@ -222,6 +222,6 @@ for (int i = 0; i < posi.first; i++){
 
 }
 
- os<< string(posi.second*2+1, (_c[posi.first-1][posi.second-1].porta_oberta(paret("sud")) ? ' ' : '*')) <<'\n';
+ os<< string((int)posi.second*2+1, (_c[(int)posi.first-1][(int)posi.second-1].porta_oberta(paret("sud")) ? ' ' : '*')) <<'\n';
 
 }

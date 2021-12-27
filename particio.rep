@@ -1,13 +1,12 @@
 nat max_grup;   //numero màxim de GRUPS
 nat n_max;  //numero màxim de NODES
-//nat equilibri;
 nat n_elem;       // Nombre de nodes del subarbre
 
 struct node {
   T _k;      // Clau
   node* _esq;   // fill esquerre
   node* _dret;  // fill dret
-  node(const T &k, node* esq = NULL, node* dret = NULL);
+  //node(const T &k, node* esq = NULL, node* dret = NULL);
   nat alt_max;
 };
 node *_arrel;
@@ -17,10 +16,12 @@ node *_arrel;
 ///////////////////////
 
 //Mètode Constructora
-node* const_aux(node *n, nat cont);
+node* copia_particio(node *n);
+void destrueix_particio(node* p);
 
 ///Mètodes d'afegir
 node* insereix_avl(node *n, const T &k);
+node* newNode(T k);
 static nat altura_max(node *n);
 static T max(T a, T b);
 static nat factor_eq(node *n);
