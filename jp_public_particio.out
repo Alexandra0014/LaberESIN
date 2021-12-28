@@ -19,95 +19,64 @@
 #init p0 particio<int> 0
 ###! Intentem inserir element sobrepassant maxim
 #p0 afegir 1
-TENGOOOOOOOOO: 0
-n_elem: 1
+Error::particio<T>:41:Particio plena.
 ##Error::particio<T>:41:Particio plena.
 ###!
 ###! Constructor particio amb 1 element
 #init p1 particio<int> 1
 #p1 afegir 3
-TENGOOOOOOOOO: 0
 n_elem: 1
+n_max: 1
 ###! Intentem inserir element sobrepassant maxim
 #p1 afegir 1
-TENGOOOOOOOOO: 3
-n_elem: 2
+Error::particio<T>:41:Particio plena.
 ##Error::particio<T>:41:Particio plena.
 ###!
 ###! Constructor particio amb 2 elements pero espai per 9 elements
 #init p2 particio<int> 9
 #p2 afegir 3
-TENGOOOOOOOOO: 0
 n_elem: 1
+n_max: 9
 #p2 afegir 7
-TENGOOOOOOOOO: 3
 n_elem: 2
+n_max: 9
 ###!
 ###! Constructor particio amb multiples elements
 #init p9 particio<int> 9
 #p9 afegir 3
-TENGOOOOOOOOO: 0
 n_elem: 1
+n_max: 9
 #p9 afegir 79
-TENGOOOOOOOOO: 3
 n_elem: 2
+n_max: 9
 #p9 afegir 5
-TENGOOOOOOOOO: 79
 n_elem: 3
-TENGOOOOOOOOO: 3
-n_elem: 3
+n_max: 9
 #p9 afegir 10
-TENGOOOOOOOOO: 5
 n_elem: 4
-TENGOOOOOOOOO: 3
-n_elem: 4
+n_max: 9
 #p9 afegir 2
-TENGOOOOOOOOO: 0
 n_elem: 5
-TENGOOOOOOOOO: 3
-n_elem: 5
+n_max: 9
 #p9 afegir 9
-TENGOOOOOOOOO: 5
 n_elem: 6
-TENGOOOOOOOOO: 10
-n_elem: 6
-TENGOOOOOOOOO: 3
-n_elem: 6
+n_max: 9
 #p9 afegir 4
-TENGOOOOOOOOO: 5
 n_elem: 7
-TENGOOOOOOOOO: 10
-n_elem: 7
-TENGOOOOOOOOO: 3
-n_elem: 7
+n_max: 9
 #p9 afegir 12
-TENGOOOOOOOOO: 79
 n_elem: 8
-TENGOOOOOOOOO: 10
-n_elem: 8
-TENGOOOOOOOOO: 3
-n_elem: 8
+n_max: 9
 #p9 afegir 15
-TENGOOOOOOOOO: 12
 n_elem: 9
-TENGOOOOOOOOO: 10
-n_elem: 9
-TENGOOOOOOOOO: 3
-n_elem: 9
+n_max: 9
 ###! Intentem inserir element repetit
 #p9 afegir 5
-TENGOOOOOOOOO: 5
 n_elem: 9
-TENGOOOOOOOOO: 10
-n_elem: 9
-TENGOOOOOOOOO: 3
-n_elem: 9
+n_max: 9
 ###! Intentem inserir element sobrepassant maxim
 #p9 afegir 1
-TENGOOOOOOOOO: 2
-n_elem: 10
-TENGOOOOOOOOO: 3
-n_elem: 10
+Error::particio<T>:41:Particio plena.
 ##Error::particio<T>:41:Particio plena.
 ###!
 ###!---------------------------------------------------------------------
@@ -115,7 +84,7 @@ n_elem: 10
 ###!---------------------------------------------------------------------
 ###!
 #p0 size
-3636105632
+3869966752
 ##0
 #p1 size
 0
@@ -132,7 +101,7 @@ n_elem: 10
 ###!---------------------------------------------------------------------
 ###!
 #p0 num_elems
-1
+0
 ##0
 #p0 num_maxim
 0
@@ -140,7 +109,7 @@ n_elem: 10
 ###!
 ###!
 #p1 num_elems
-2
+1
 ##1
 #p1 num_maxim
 1
@@ -156,7 +125,7 @@ n_elem: 10
 ###!
 ###!
 #p9 num_elems
-10
+9
 ##9
 #p9 num_maxim
 9
@@ -330,7 +299,7 @@ true
 ###!---------------------------------------------------------------------
 ###!
 #p0 size
-3636105632
+3869966752
 ##0
 #p1 size
 0
@@ -348,7 +317,7 @@ true
 ###!---------------------------------------------------------------------
 ###!
 #p0 num_elems
-1
+0
 ##0
 #p0 num_maxim
 0
@@ -356,7 +325,7 @@ true
 ###!
 ###!
 #p1 num_elems
-2
+1
 ##1
 #p1 num_maxim
 1
@@ -372,7 +341,7 @@ true
 ###!
 ###!
 #p9 num_elems
-10
+9
 ##9
 #p9 num_maxim
 9
@@ -412,13 +381,13 @@ true
 ###!---------------------------------------------------------------------
 ###!
 #p0 size
-3636132624
+3869993760
 ##0
 #p1 size
-3636105632
+3869966752
 ##1
 #p2 size
-3636117280
+3869978400
 ##1
 #p9 size
 0
@@ -590,13 +559,13 @@ true
 ###!---------------------------------------------------------------------
 ###!
 #p0 size
-3636132624
+3869993760
 ##0
 #p1 size
-3636105632
+3869966752
 ##1
 #p2 size
-3636117280
+3869978400
 ##1
 #p9 size
 0

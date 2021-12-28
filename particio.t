@@ -9,7 +9,9 @@ using namespace std;
 template <typename T>
 particio<T>::particio(nat n) throw(error){
     n_max = n;
-    _arrel = new node;
+    n_elem = 0;
+    _arrel = NULL;
+    /*_arrel = new node;
     try {
       _arrel -> _esq = NULL;
       _arrel -> _dret = NULL;
@@ -17,7 +19,7 @@ particio<T>::particio(nat n) throw(error){
     catch (...) {
       delete _arrel;
       throw;
-  }
+  }*/
 
 }
 ////////////////////// CONSTRUCTORA COPIA
@@ -149,14 +151,18 @@ typename particio<T>::node* particio<T>::insereix_avl(node *n, const T &k){
     //BST
 
     if (n == NULL){
-        return newNode(k);
+        if(n_max == n_elem ) throw error(ParticioPlena);
+        else return newNode(k);
     }
     else{
-        if (k < n->_k) {
+      if(k != n->_k){
+        if(n_max == n_elem ) throw error(ParticioPlena);
+        else if (k < n->_k) {
             n->_esq = insereix_avl(n->_esq, k);
         }else if (k > n->_k) {
             n->_dret = insereix_avl(n->_dret, k);
         }
+      }
     }
 
     //Actualització altura maxima del node anterior
@@ -188,8 +194,6 @@ typename particio<T>::node* particio<T>::insereix_avl(node *n, const T &k){
         n->_dret = rightRotate(n->_dret);
         return leftRotate(n);
     }
-cout<<"TENGOOOOOOOOO: "<<n -> _k<<endl;
-cout<<"n_elem: "<<n_elem<<endl;
 
 return n;
 }
@@ -200,10 +204,10 @@ return n;
 // número màxim d'elements abans d'afegir aquest nou.
 template <typename T>
 void particio<T>::afegir(const T &x) throw(error){
-    if(n_max +1 == n_elem ) throw error(ParticioPlena);
-    else{
-        _arrel = insereix_avl(_arrel, x);
-    }
+
+    _arrel = insereix_avl(_arrel, x);
+    cout<<"n_elem: "<<n_elem<<endl;
+    cout<<"n_max: "<<n_max<<endl;
 }
 
 ////////////////////// UNIR
