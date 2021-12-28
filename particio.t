@@ -4,7 +4,7 @@ using namespace std;
 
 
 
-////////////////////// CONSTRUCTORA
+////////////////////// CONSTRUCTORA ////////////////
 // Construeix una particio amb n elements com a màxim.
 template <typename T>
 particio<T>::particio(nat n) throw(error){
@@ -22,7 +22,7 @@ particio<T>::particio(nat n) throw(error){
   }*/
 
 }
-////////////////////// CONSTRUCTORA COPIA
+////////////////////// CONSTRUCTORA COPIA ////////////////
 //Metode auxiliar copia
 // La còpia es fa seguint un recorregut en preordre.
 template <typename T>
@@ -48,7 +48,7 @@ template <typename T>
 particio<T>::particio(const particio & p) throw(error){
     _arrel = copia_particio(p._arrel);
 }
-////////////////////// ASSIGNACIÓ
+////////////////////// ASSIGNACIÓ ////////////////
 template <typename T>
 particio<T> & particio<T>::operator=(const particio & p) throw(error){
     particio<T> tmp(p);
@@ -57,7 +57,7 @@ particio<T> & particio<T>::operator=(const particio & p) throw(error){
     tmp._arrel = aux;
     return *this;
 }
-////////////////////// DESTRUCTORA
+////////////////////// DESTRUCTORA ////////////////
 //Metode auxiliar Destructora
 // La destrucció es fa seguint un recorregut en postordre.
 template <typename T>
@@ -73,7 +73,7 @@ particio<T>::~particio() throw(){
     destrueix_particio(_arrel);
 }
 
-////////////////////// AFEGIR
+////////////////////// AFEGIR ////////////////
 //Metode auxiliar factor equilibri
 template <typename T>
 nat particio<T>::factor_eq(node *n){
@@ -209,18 +209,57 @@ void particio<T>::afegir(const T &x) throw(error){
     cout<<"n_elem: "<<n_elem<<endl;
     cout<<"n_max: "<<n_max<<endl;
 }
+////////////////////// MFset ////////////////
+//Metode auxiliar retorna elements en format preOrdre
+template <typename T>
+typename particio<T>::node* particio<T>::preOrdre(node *n, T arrelem[], int i){
 
-////////////////////// UNIR
+    if(n != NULL){
+        arrelem[i] = n -> _k;
+        i++;
+        n -> _esq = preOrder(n ->_esq,arrelem,i) ;
+        n -> _dret =preOrder(n ->_dret,arrelem,i);
+    }
+    return n;
+}
+template <typename T>
+void particio<T>:: mfset(nat ne){  //constructora del array amb els representants
+    arrelem = new T[ne]; // Demanem ne elements de tipus T
+    int i = 0;
+    _arrel = preOrdre(_arrel,arrelem,i);
+}
+
+template <typename T>
+T particio<T>:: find(T e) throw(error){    //Busca si e és un representant
+    T representant;
+    mfset(n_elem);
+    int i = 0;
+    bool trobat = false;
+    while(i < n_elem && not trobat){
+        if(arrelem[i] == e){
+            trobat = true;
+            representant = e;
+        }
+        i++;
+    }
+    if(!trobat) throw error(ElemInexistent);
+    return representant;
+}
+
+////////////////////// UNIR ////////////////
 // Uneix els dos grups als quals pertanyen aquests dos elements. Si tots dos
 // elements ja pertanyien al mateix grup no fa res.
 // Es produeix un error si algun dels elements no pertany a la partició.
 
 template <typename T>
 void particio<T>::unir(const T & x, const T & y) throw(error){
-    cout<<x<<y<<endl;
+    T u = find(x);  //mira si l'element hi es al AVL
+    T v = find(y);  //mira si l'element hi es al AVL
+
+
 }
 
-////////////////////// MATEIX GRUP
+////////////////////// MATEIX GRUP ////////////////
 // Retorna si els elements x i y pertanyen al mateix grup.
 // Es produeix un error si algun dels dos elements no pertany a la partició.
 
@@ -230,20 +269,20 @@ bool particio<T>::mateix_grup(const T & x, const T & y) const throw(error){
     return true;
 }
 
-////////////////////// MAXIM GRUP
+////////////////////// MAXIM GRUP ////////////////
 // Retorna el número de grups que té la particio.
 template <typename T>
 nat particio<T>::size() const throw(){
   return max_grup;
 }
 
-//////////////////////  NUM Elements
+//////////////////////  NUM Elements ////////////////
 // Retorna el número d'elements que té la particio.
 template <typename T>
 nat particio<T>::num_elements() const throw(){
   return n_elem;
 }
-//////////////////////  NUM MAXIM
+//////////////////////  NUM MAXIM ////////////////
 // Retorna el número màxim d'elements que pot tenir la particio.
 template <typename T>
 nat particio<T>::num_maxim() const throw(){
