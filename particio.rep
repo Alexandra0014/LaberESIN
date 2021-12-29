@@ -1,7 +1,6 @@
 nat max_grup;   //numero màxim de GRUPS
 nat n_max;  //numero màxim de NODES
 nat n_elem;       // Nombre de nodes del subarbre
-T arrelem;      //Array de representants
 struct node {
   T _k;      // Clau
   node* _esq;   // fill esquerre
@@ -27,7 +26,8 @@ static nat factor_eq(node *n);
 static node* rightRotate(node *y);
 static node* leftRotate(node *x);
 
-//Mètode MFset
-node* preOrdre(node *n,T arrelem[], int i);
-void mfset(nat ne);  //constructora del array amb els representants
-T find(T e) throw(error);    //Busca si e és un representant
+//Mètode find
+T find(node *n, const T &e, T pare) const throw(error);    //Busca si e és un representant
+
+//Mètode n_grups
+nat n_grups(node *n, nat cont)const throw();

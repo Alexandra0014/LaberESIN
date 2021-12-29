@@ -11,15 +11,6 @@ particio<T>::particio(nat n) throw(error){
     n_max = n;
     n_elem = 0;
     _arrel = NULL;
-    /*_arrel = new node;
-    try {
-      _arrel -> _esq = NULL;
-      _arrel -> _dret = NULL;
-    }
-    catch (...) {
-      delete _arrel;
-      throw;
-  }*/
 
 }
 ////////////////////// CONSTRUCTORA COPIA ////////////////
@@ -204,45 +195,31 @@ return n;
 // número màxim d'elements abans d'afegir aquest nou.
 template <typename T>
 void particio<T>::afegir(const T &x) throw(error){
-
     _arrel = insereix_avl(_arrel, x);
     cout<<"n_elem: "<<n_elem<<endl;
     cout<<"n_max: "<<n_max<<endl;
 }
-////////////////////// MFset ////////////////
+////////////////////// FIND ////////////////
 //Metode auxiliar retorna elements en format preOrdre
-template <typename T>
-typename particio<T>::node* particio<T>::preOrdre(node *n, T arrelem[], int i){
-
-    if(n != NULL){
-        arrelem[i] = n -> _k;
-        i++;
-        n -> _esq = preOrder(n ->_esq,arrelem,i) ;
-        n -> _dret =preOrder(n ->_dret,arrelem,i);
-    }
-    return n;
-}
-template <typename T>
-void particio<T>:: mfset(nat ne){  //constructora del array amb els representants
-    arrelem = new T[ne]; // Demanem ne elements de tipus T
-    int i = 0;
-    _arrel = preOrdre(_arrel,arrelem,i);
-}
 
 template <typename T>
-T particio<T>:: find(T e) throw(error){    //Busca si e és un representant
+T particio<T>:: find(node *n,const T &e, T pare)const throw(error){    //Busca si e és un representant
+    //Es busca el pare del element donat
     T representant;
-    mfset(n_elem);
-    int i = 0;
-    bool trobat = false;
-    while(i < n_elem && not trobat){
-        if(arrelem[i] == e){
-            trobat = true;
-            representant = e;
+    if (n == NULL){ //cas on no s'ha trobat l'element al AVL
+         throw error(ElemInexistent);
+    }else{
+        if (n->_k == e) {
+            representant = pare;
         }
-        i++;
+        else {
+
+            pare = find(n->_esq, e, n->_k);
+            pare = find(n->_dret, e, n->_k);
+        }
+
     }
-    if(!trobat) throw error(ElemInexistent);
+
     return representant;
 }
 
@@ -253,8 +230,10 @@ T particio<T>:: find(T e) throw(error){    //Busca si e és un representant
 
 template <typename T>
 void particio<T>::unir(const T & x, const T & y) throw(error){
-    T u = find(x);  //mira si l'element hi es al AVL
-    T v = find(y);  //mira si l'element hi es al AVL
+    T u = find(_arrel,x,-1);  //mira si l'element hi es al AVL / u representant de x
+    T v = find(_arrel,y,-1);  //mira si l'element hi es al AVL / v representant de y
+
+
 
 
 }
@@ -265,15 +244,31 @@ void particio<T>::unir(const T & x, const T & y) throw(error){
 
 template <typename T>
 bool particio<T>::mateix_grup(const T & x, const T & y) const throw(error){
-    cout<<x<<y<<endl;
-    return true;
+    T u,v;
+    u = find(_arrel,x,-1);
+    v = find(_arrel,y,-1);
+    if( u == v ) return true;
+    else return false;
 }
 
 ////////////////////// MAXIM GRUP ////////////////
+//Metode auxiliar recorregur pares aka numero de GRUPS
+template <typename T>
+nat particio<T>:: n_grups(node *n, nat cont) const throw(){
+
+    if (n != NULL) {
+        //if(n->_esq != NULL || n->_dret != NULL){
+            cont++;
+        //}
+        cont = n_grups(n->_esq,cont);
+        cont = n_grups(n->_dret,cont);
+    }
+    return cont;
+}
 // Retorna el número de grups que té la particio.
 template <typename T>
 nat particio<T>::size() const throw(){
-  return max_grup;
+    return n_grups(_arrel,0);
 }
 
 //////////////////////  NUM Elements ////////////////

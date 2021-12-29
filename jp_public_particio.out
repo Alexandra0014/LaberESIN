@@ -84,16 +84,16 @@ Error::particio<T>:41:Particio plena.
 ###!---------------------------------------------------------------------
 ###!
 #p0 size
-3869966752
+0
 ##0
 #p1 size
-0
+1
 ##1
 #p2 size
-0
+2
 ##2
 #p9 size
-0
+9
 ##9
 ###!
 ###!---------------------------------------------------------------------
@@ -188,110 +188,85 @@ Error::particio<T>:41:Particio plena.
 ###!---------------------------------------------------------------------
 ###!
 #p0 equiv 0 0
-00
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p0 equiv 1 1
-11
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 ###!
 ###!
 #p1 equiv 0 1
-01
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p1 equiv 3 0
-30
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p1 equiv 2 3
-23
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p1 equiv 3 3
-33
 true
 ##true
 ###!
 ###!
 #p2 equiv 0 7
-07
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p2 equiv 7 4
-74
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p2 equiv 7 7
-77
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p2 equiv 7 3
-73
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p2 equiv 3 7
-37
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 ###!
 ###!
 #p9 equiv 0 5
-05
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p9 equiv 5 6
-56
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p9 equiv 12 3
-123
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 3 12
-312
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 5 9
-59
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 15 5
-155
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 9 15
-915
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 15 9
-159
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 2 2
-22
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 15 15
-1515
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 2 3
-23
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##false
 #p9 equiv 5 12
-512
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##false
 #p9 equiv 10 15
-1015
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##false
 #p9 equiv 5 4
-54
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##false
 ###!
 ###!---------------------------------------------------------------------
@@ -299,16 +274,16 @@ true
 ###!---------------------------------------------------------------------
 ###!
 #p0 size
-3869966752
+0
 ##0
 #p1 size
-0
+1
 ##1
 #p2 size
-0
+2
 ##1
 #p9 size
-0
+9
 ##6
 ###!
 ###!---------------------------------------------------------------------
@@ -381,16 +356,16 @@ true
 ###!---------------------------------------------------------------------
 ###!
 #p0 size
-3869993760
+0
 ##0
 #p1 size
-3869966752
+1
 ##1
 #p2 size
-3869978400
+2
 ##1
 #p9 size
-0
+9
 ##6
 ###!
 ###!---------------------------------------------------------------------
@@ -448,110 +423,85 @@ true
 ###!---------------------------------------------------------------------
 ###!
 #p0 equiv 0 0
-00
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p0 equiv 1 1
-11
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 ###!
 ###!
 #p1 equiv 0 1
-01
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p1 equiv 3 0
-30
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p1 equiv 2 3
-23
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p1 equiv 3 3
-33
 true
 ##true
 ###!
 ###!
 #p2 equiv 0 7
-07
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p2 equiv 7 4
-74
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p2 equiv 7 7
-77
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p2 equiv 7 3
-73
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p2 equiv 3 7
-37
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 ###!
 ###!
 #p9 equiv 0 5
-05
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p9 equiv 5 6
-56
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##Error::particio<T>:40:L'element no pertany a la particio.
 #p9 equiv 12 3
-123
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 3 12
-312
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 5 9
-59
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 15 5
-155
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 9 15
-915
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 15 9
-159
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 2 2
-22
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 15 15
-1515
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 #p9 equiv 2 3
-23
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##false
 #p9 equiv 5 12
-512
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##false
 #p9 equiv 10 15
-1015
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##false
 #p9 equiv 5 4
-54
-true
+Error::particio<T>:40:L'element no pertany a la particio.
 ##true
 ###!
 ###!---------------------------------------------------------------------
@@ -559,16 +509,16 @@ true
 ###!---------------------------------------------------------------------
 ###!
 #p0 size
-3869993760
+0
 ##0
 #p1 size
-3869966752
+1
 ##1
 #p2 size
-3869978400
+2
 ##1
 #p9 size
-0
+9
 ##4
 ###!
 ###!---------------------------------------------------------------------
