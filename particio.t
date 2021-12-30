@@ -140,7 +140,6 @@ typename particio<T>::node* particio<T>::leftRotate(node *x){
 template <typename T>
 typename particio<T>::node* particio<T>::insereix_avl(node *n, const T &k){
     //BST
-
     if (n == NULL){
         if(n_max == n_elem ) throw error(ParticioPlena);
         else return newNode(k);
@@ -196,46 +195,124 @@ return n;
 template <typename T>
 void particio<T>::afegir(const T &x) throw(error){
     _arrel = insereix_avl(_arrel, x);
-    cout<<"n_elem: "<<n_elem<<endl;
-    cout<<"n_max: "<<n_max<<endl;
 }
-////////////////////// FIND ////////////////
+////////////////////// UNIR ////////////////
+//metode si existeix o no l'element
+template <typename T>
+bool particio<T>:: existeix(node *n, T e, bool trobat){
+    if(n != NULL)
+    {
+        if(n -> _k == e) trobat = true;
+        trobat = existeix(n->_esq,e,trobat);
+        trobat = existeix(n->_dret,e,trobat);
+    }
+    return trobat;
+}
+
+//PREORDRE HOME JAAAAAAAAAA
+template <typename T>
+void particio<T>:: preOrder(node *n) const throw()
+{
+    if(n != NULL)
+    {
+        cout << n->_k << " ";
+        preOrder(n->_esq);
+        preOrder(n->_dret);
+    }
+}
+
+
 //Metode auxiliar retorna elements en format preOrdre
 
 template <typename T>
 T particio<T>:: find(node *n,const T &e, T pare)const throw(error){    //Busca si e és un representant
     //Es busca el pare del element donat
-    T representant;
-    if (n == NULL){ //cas on no s'ha trobat l'element al AVL
-         throw error(ElemInexistent);
-    }else{
+    preOrder(n);
+    cout<<endl;
+    if (n != NULL){
         if (n->_k == e) {
-            representant = pare;
-        }
-        else {
-
+            cout<<"PARE: "<<pare<<endl;
+            return pare;
+        }else{
             pare = find(n->_esq, e, n->_k);
             pare = find(n->_dret, e, n->_k);
         }
-
     }
-
-    return representant;
+    return pare;
 }
 
-////////////////////// UNIR ////////////////
+//Metode que busca el node pare per després contar els fills
+template <typename T>
+typename particio<T>::node* particio<T>::buscanode(node *n, T e){
+    node *pare;
+    if(n != NULL){
+        if(n -> _k == e){
+            pare = n;
+            return pare;
+        }
+        n->_esq = buscanode(n->_esq, e);
+        n->_dret = buscanode(n->_dret, e);
+    }
+    return n;
+}
+
+//Metode auxiliar comptador de fills
+template <typename T>
+int particio<T>::contfills(node *n, int c){
+    if(n != NULL){
+        c++;
+        c = contfills(n->_esq, c);
+        c = contfills(n->_dret, c);
+    }
+    return c;
+}
+//Metode inserir ( unir en la sombra)
+template <typename T>
+void particio<T>::inserir(node *n1, node *n2){  //s'insereix a N1!!!!!
+    if(n2 != NULL){
+        n1 = insereix_avl(n1, n2 ->_k);
+        inserir(n1,n2->_esq);
+        inserir(n1,n2->_dret);
+    }
+
+}
+
 // Uneix els dos grups als quals pertanyen aquests dos elements. Si tots dos
 // elements ja pertanyien al mateix grup no fa res.
 // Es produeix un error si algun dels elements no pertany a la partició.
 
 template <typename T>
 void particio<T>::unir(const T & x, const T & y) throw(error){
-    T u = find(_arrel,x,-1);  //mira si l'element hi es al AVL / u representant de x
-    T v = find(_arrel,y,-1);  //mira si l'element hi es al AVL / v representant de y
+    if(!existeix(_arrel,x,false) || !existeix(_arrel,y,false)) throw error(ElemInexistent);
+    else{
+        T u = find(_arrel,x,-1);  //mira si l'element hi es al AVL / u representant de x
+        cout<<endl;
+        T v = find(_arrel,y,-1);  //mira si l'element hi es al AVL / v representant de y
+        cout<<"U: "<<u<<" V: "<<v<<endl;
+        if(u != v){
+            int cu,cv;
+            node *pu = buscanode(_arrel, u);
+            node *pv = buscanode(_arrel, v);
+            cu = contfills(pu,0);
+            cv = contfills(pv,0);
+            cout<<"CU: "<<cu<<" CV: "<<cv<<endl;
+            if(cu > cv){ //unim els nodes de cu a cv
+                inserir(pu,pv);
+                //destrueix_particio(pu);
+            }
+            else if(cu < cv){ //unim els nodes de cv a cu
+                inserir(pv,pu);
+                //destrueix_particio(pv);
+            }else{ //ens dona igual (escollir un)
+                inserir(pu,pv);
+                //destrueix_particio(pu);
+            }
+            cout<<"UNIOOOOOOOOOOOOON"<<endl;
+            preOrder(_arrel);
+            cout<<endl;
 
-
-
-
+        }
+    }
 }
 
 ////////////////////// MATEIX GRUP ////////////////

@@ -27,7 +27,14 @@ static node* rightRotate(node *y);
 static node* leftRotate(node *x);
 
 //Mètode find
+void preOrder(node *n) const throw();
 T find(node *n, const T &e, T pare) const throw(error);    //Busca si e és un representant
 
 //Mètode n_grups
 nat n_grups(node *n, nat cont)const throw();
+
+//Mètodes d'UNIR
+bool existeix(node *n, T e, bool trobat);
+node* buscanode(node *n, T e);
+int contfills(node *n, int c);
+void inserir(node *n1, node *n2);
