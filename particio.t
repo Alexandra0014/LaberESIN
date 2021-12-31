@@ -10,6 +10,7 @@ template <typename T>
 particio<T>::particio(nat n) throw(error){
     n_max = n;
     n_elem = 0;
+    max_grup = 0;
     _arrel = NULL;
 
 }
@@ -23,6 +24,8 @@ typename particio<T>::node* particio<T>::copia_particio(node* p) {
     aux = new node;
     try {
       aux -> _k = p -> _k;
+      aux -> alt_max = p -> alt_max;
+      aux -> fills = p -> fills;
       aux -> _esq = aux -> _dret = NULL;
       aux -> _esq = copia_particio(p -> _esq);
       aux -> _dret = copia_particio(p -> _dret);
@@ -37,11 +40,17 @@ typename particio<T>::node* particio<T>::copia_particio(node* p) {
 // Constructora per còpia, assignació i destructora.
 template <typename T>
 particio<T>::particio(const particio & p) throw(error){
+    n_max = p.n_max;
+    n_elem = p.n_elem;
+    max_grup = p.max_grup;
     _arrel = copia_particio(p._arrel);
 }
 ////////////////////// ASSIGNACIÓ ////////////////
 template <typename T>
 particio<T> & particio<T>::operator=(const particio & p) throw(error){
+    n_max = p.n_max;
+    n_elem = p.n_elem;
+    max_grup = p.max_grup;
     particio<T> tmp(p);
     node* aux = _arrel;
     _arrel = tmp._arrel;
@@ -91,7 +100,10 @@ typename particio<T>::node* particio<T>:: newNode(T k){
     n -> _k = k;
     n -> _esq = NULL;
     n -> _dret = NULL;
+    n -> representant = n;
     n -> alt_max = 1;
+    n -> fills = 1;
+    max_grup++;
     n_elem ++;
     return n;
 }
@@ -199,7 +211,7 @@ void particio<T>::afegir(const T &x) throw(error){
 ////////////////////// UNIR ////////////////
 //metode si existeix o no l'element
 template <typename T>
-bool particio<T>:: existeix(node *n, T e, bool trobat){
+bool particio<T>:: existeix(node *n, T e, bool trobat) const throw(){
     if(n != NULL)
     {
         if(n -> _k == e) trobat = true;
@@ -210,6 +222,7 @@ bool particio<T>:: existeix(node *n, T e, bool trobat){
 }
 
 //PREORDRE HOME JAAAAAAAAAA
+
 template <typename T>
 void particio<T>:: preOrder(node *n) const throw()
 {
@@ -225,57 +238,31 @@ void particio<T>:: preOrder(node *n) const throw()
 //Metode auxiliar retorna elements en format preOrdre
 
 template <typename T>
-T particio<T>:: find(node *n,const T &e, T pare)const throw(error){    //Busca si e és un representant
+typename particio<T>::node* particio<T>:: find(node *n)const throw(error){    //Busca si e és un representant
     //Es busca el pare del element donat
-    preOrder(n);
-    cout<<endl;
-    if (n != NULL){
-        if (n->_k == e) {
-            cout<<"PARE: "<<pare<<endl;
-            return pare;
-        }else{
-            pare = find(n->_esq, e, n->_k);
-            pare = find(n->_dret, e, n->_k);
-        }
-    }
-    return pare;
-}
-
-//Metode que busca el node pare per després contar els fills
-template <typename T>
-typename particio<T>::node* particio<T>::buscanode(node *n, T e){
-    node *pare;
-    if(n != NULL){
-        if(n -> _k == e){
-            pare = n;
-            return pare;
-        }
-        n->_esq = buscanode(n->_esq, e);
-        n->_dret = buscanode(n->_dret, e);
+    //preOrder(n);
+    //cout<<endl;
+    while(n != n->representant){
+        n = n->representant;
     }
     return n;
 }
 
-//Metode auxiliar comptador de fills
+//Metode que busca el node pare per després contar els fills
 template <typename T>
-int particio<T>::contfills(node *n, int c){
-    if(n != NULL){
-        c++;
-        c = contfills(n->_esq, c);
-        c = contfills(n->_dret, c);
+typename particio<T>::node* particio<T>::buscanode(node *n, T e) const throw(){
+    while(n != NULL){
+        if(e > n->_k){  //derecha
+            n = n->_dret;
+        }else if(e < n->_k){ //izq
+            n = n->_esq;
+        }else{
+            return n;
+        }
     }
-    return c;
+    return n;
 }
-//Metode inserir ( unir en la sombra)
-template <typename T>
-void particio<T>::inserir(node *n1, node *n2){  //s'insereix a N1!!!!!
-    if(n2 != NULL){
-        n1 = insereix_avl(n1, n2 ->_k);
-        inserir(n1,n2->_esq);
-        inserir(n1,n2->_dret);
-    }
 
-}
 
 // Uneix els dos grups als quals pertanyen aquests dos elements. Si tots dos
 // elements ja pertanyien al mateix grup no fa res.
@@ -285,32 +272,39 @@ template <typename T>
 void particio<T>::unir(const T & x, const T & y) throw(error){
     if(!existeix(_arrel,x,false) || !existeix(_arrel,y,false)) throw error(ElemInexistent);
     else{
-        T u = find(_arrel,x,-1);  //mira si l'element hi es al AVL / u representant de x
-        cout<<endl;
-        T v = find(_arrel,y,-1);  //mira si l'element hi es al AVL / v representant de y
-        cout<<"U: "<<u<<" V: "<<v<<endl;
-        if(u != v){
-            int cu,cv;
-            node *pu = buscanode(_arrel, u);
-            node *pv = buscanode(_arrel, v);
-            cu = contfills(pu,0);
-            cv = contfills(pv,0);
-            cout<<"CU: "<<cu<<" CV: "<<cv<<endl;
-            if(cu > cv){ //unim els nodes de cu a cv
-                inserir(pu,pv);
-                //destrueix_particio(pu);
-            }
-            else if(cu < cv){ //unim els nodes de cv a cu
-                inserir(pv,pu);
-                //destrueix_particio(pv);
-            }else{ //ens dona igual (escollir un)
-                inserir(pu,pv);
-                //destrueix_particio(pu);
-            }
-            cout<<"UNIOOOOOOOOOOOOON"<<endl;
-            preOrder(_arrel);
-            cout<<endl;
+        node *nx = buscanode(_arrel, x);     //node de x
+        node *ny = buscanode(_arrel, y);    // node de y
+        node* rx = find(nx);  //mira si l'element hi es al AVL / u representant de x
+        //cout<<endl;
+        node* ry = find(ny);  //mira si l'element hi es al AVL / v representant de y
 
+        //cout<<"RX: "<<rx<<" RY: "<<ry<<endl;
+
+        if(rx->_k != ry->_k){
+            int cx,cy;
+
+            //cout<<"REPRESENTANT NX: "<<rx -> representant -> _k<<endl;
+            //cout<<"REPRESENTANT NY: "<<ry -> representant -> _k<<endl;
+
+            cx = rx->fills;       //conta els fills del node x
+            cy = ry->fills;      //conta els fills del node y
+            //cout<<"CX: "<<cx<<" CY: "<<cy<<endl;
+
+            if(cx > cy){ //unim els nodes de cy a cx
+                ry -> representant = rx;
+                cy = cy+cx;
+                ry->fills = cy;
+            }
+            else if(cx < cy){ //unim els nodes de cx a cy
+                rx -> representant = ry;
+                cx = cy+cx;
+                rx->fills = cx;
+            }else{ //ens dona igual (escollir un)
+                ry -> representant = rx;
+                cy = cy+cx;
+                ry->fills = cy;
+            }
+            max_grup--;
         }
     }
 }
@@ -321,31 +315,24 @@ void particio<T>::unir(const T & x, const T & y) throw(error){
 
 template <typename T>
 bool particio<T>::mateix_grup(const T & x, const T & y) const throw(error){
-    T u,v;
-    u = find(_arrel,x,-1);
-    v = find(_arrel,y,-1);
-    if( u == v ) return true;
-    else return false;
+    bool trobat = false;
+    if(!existeix(_arrel,x,false) || !existeix(_arrel,y,false)) throw error(ElemInexistent);
+    else{
+        node *nx = buscanode(_arrel, x);     //node de x
+        node *ny = buscanode(_arrel, y);    // node de y
+        node* rx = find(nx);  //mira si l'element hi es al AVL / u representant de x
+        node* ry = find(ny);  //mira si l'element hi es al AVL / u representant de x
+        if( rx -> _k == ry -> _k ) trobat = true;
+    }
+    return trobat;
 }
 
 ////////////////////// MAXIM GRUP ////////////////
-//Metode auxiliar recorregur pares aka numero de GRUPS
-template <typename T>
-nat particio<T>:: n_grups(node *n, nat cont) const throw(){
 
-    if (n != NULL) {
-        //if(n->_esq != NULL || n->_dret != NULL){
-            cont++;
-        //}
-        cont = n_grups(n->_esq,cont);
-        cont = n_grups(n->_dret,cont);
-    }
-    return cont;
-}
 // Retorna el número de grups que té la particio.
 template <typename T>
 nat particio<T>::size() const throw(){
-    return n_grups(_arrel,0);
+    return max_grup;
 }
 
 //////////////////////  NUM Elements ////////////////
