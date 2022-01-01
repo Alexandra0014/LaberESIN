@@ -15,6 +15,23 @@ particio<T>::particio(nat n) throw(error){
 
 }
 ////////////////////// CONSTRUCTORA COPIA ////////////////
+//Metode auxiliar per copiar tots els representants després de la unió
+
+template <typename T>
+void particio<T>::copia_repre(node *a,node *p)const throw(){
+
+    if(a!=NULL && p!= NULL){
+
+        node *repreP = find(p);
+        cout<<"REPRE P: "<<repreP->_k<<endl;
+        node *repreA = buscanode(a,repreP->_k);
+        a -> representant = repreA;
+        cout<<"REPRE A: "<<repreA-> _k<<endl;
+        copia_repre(a -> _esq,p -> _esq);
+        copia_repre(a -> _dret,p -> _dret);
+    }
+
+}
 //Metode auxiliar copia
 // La còpia es fa seguint un recorregut en preordre.
 template <typename T>
@@ -29,6 +46,7 @@ typename particio<T>::node* particio<T>::copia_particio(node* p) {
       aux -> _esq = aux -> _dret = NULL;
       aux -> _esq = copia_particio(p -> _esq);
       aux -> _dret = copia_particio(p -> _dret);
+
     }
     catch (...) {
       destrueix_particio(aux);
@@ -44,6 +62,8 @@ particio<T>::particio(const particio & p) throw(error){
     n_elem = p.n_elem;
     max_grup = p.max_grup;
     _arrel = copia_particio(p._arrel);
+    copia_repre(_arrel,p._arrel);
+
 }
 ////////////////////// ASSIGNACIÓ ////////////////
 template <typename T>
@@ -228,7 +248,7 @@ void particio<T>:: preOrder(node *n) const throw()
 {
     if(n != NULL)
     {
-        cout << n->_k << " ";
+        cout << n->_k<< " ";
         preOrder(n->_esq);
         preOrder(n->_dret);
     }
@@ -240,8 +260,6 @@ void particio<T>:: preOrder(node *n) const throw()
 template <typename T>
 typename particio<T>::node* particio<T>:: find(node *n)const throw(error){    //Busca si e és un representant
     //Es busca el pare del element donat
-    //preOrder(n);
-    //cout<<endl;
     while(n != n->representant){
         n = n->representant;
     }
@@ -305,6 +323,7 @@ void particio<T>::unir(const T & x, const T & y) throw(error){
                 ry->fills = cy;
             }
             max_grup--;
+            
         }
     }
 }
