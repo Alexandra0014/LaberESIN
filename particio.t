@@ -12,7 +12,6 @@ particio<T>::particio(nat n) throw(error){
     n_elem = 0;
     max_grup = 0;
     _arrel = NULL;
-
 }
 ////////////////////// CONSTRUCTORA COPIA ////////////////
 //Metode auxiliar per copiar tots els representants després de la unió
@@ -21,12 +20,12 @@ template <typename T>
 void particio<T>::copia_repre(node *a,node *p)const throw(){
 
     if(a!=NULL && p!= NULL){
-
         node *repreP = find(p);
-        cout<<"REPRE P: "<<repreP->_k<<endl;
+        //cout<<"REPRE P: "<<repreP->_k<<endl;
         node *repreA = buscanode(a,repreP->_k);
+        //cout<<"REPRE A: "<<repreA-> _k<<endl;
         a -> representant = repreA;
-        cout<<"REPRE A: "<<repreA-> _k<<endl;
+        //cout<<"REPRE AAAAAAAAA: "<<a->representant->_k<<endl;
         copia_repre(a -> _esq,p -> _esq);
         copia_repre(a -> _dret,p -> _dret);
     }
@@ -44,6 +43,7 @@ typename particio<T>::node* particio<T>::copia_particio(node* p) {
       aux -> alt_max = p -> alt_max;
       aux -> fills = p -> fills;
       aux -> _esq = aux -> _dret = NULL;
+      aux -> representant = NULL;
       aux -> _esq = copia_particio(p -> _esq);
       aux -> _dret = copia_particio(p -> _dret);
 
@@ -54,6 +54,7 @@ typename particio<T>::node* particio<T>::copia_particio(node* p) {
   }
   return aux;
 }
+
 
 // Constructora per còpia, assignació i destructora.
 template <typename T>
@@ -68,13 +69,16 @@ particio<T>::particio(const particio & p) throw(error){
 ////////////////////// ASSIGNACIÓ ////////////////
 template <typename T>
 particio<T> & particio<T>::operator=(const particio & p) throw(error){
-    n_max = p.n_max;
-    n_elem = p.n_elem;
-    max_grup = p.max_grup;
-    particio<T> tmp(p);
-    node* aux = _arrel;
-    _arrel = tmp._arrel;
-    tmp._arrel = aux;
+
+     if(this != &p){
+        particio<T> tmp(p);
+        destrueix_particio(_arrel);
+        n_max = p.n_max;
+        n_elem = p.n_elem;
+        max_grup = p.max_grup;
+        _arrel = tmp._arrel;
+        tmp._arrel = NULL;
+    }
     return *this;
 }
 ////////////////////// DESTRUCTORA ////////////////
@@ -116,13 +120,13 @@ nat particio<T>::altura_max(node *n){
 //Metode auxiliar per crear un nou node
 template <typename T>
 typename particio<T>::node* particio<T>:: newNode(T k){
-    node* n = new node();
+    node* n = new node;
     n -> _k = k;
     n -> _esq = NULL;
     n -> _dret = NULL;
-    n -> representant = n;
     n -> alt_max = 1;
     n -> fills = 1;
+    n -> representant = n;
     max_grup++;
     n_elem ++;
     return n;
@@ -270,6 +274,7 @@ typename particio<T>::node* particio<T>:: find(node *n)const throw(error){    //
 template <typename T>
 typename particio<T>::node* particio<T>::buscanode(node *n, T e) const throw(){
     while(n != NULL){
+        cout<<"n->_k*: "<<n->_k<<endl;
         if(e > n->_k){  //derecha
             n = n->_dret;
         }else if(e < n->_k){ //izq
@@ -309,21 +314,20 @@ void particio<T>::unir(const T & x, const T & y) throw(error){
             //cout<<"CX: "<<cx<<" CY: "<<cy<<endl;
 
             if(cx > cy){ //unim els nodes de cy a cx
-                ry -> representant = rx;
+                ry -> representant = rx -> representant;
                 cy = cy+cx;
                 ry->fills = cy;
             }
             else if(cx < cy){ //unim els nodes de cx a cy
-                rx -> representant = ry;
+                rx -> representant = ry -> representant;
                 cx = cy+cx;
                 rx->fills = cx;
             }else{ //ens dona igual (escollir un)
-                ry -> representant = rx;
+                ry -> representant = rx -> representant;
                 cy = cy+cx;
                 ry->fills = cy;
             }
             max_grup--;
-            
         }
     }
 }
