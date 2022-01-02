@@ -17,18 +17,15 @@ particio<T>::particio(nat n) throw(error){
 //Metode auxiliar per copiar tots els representants després de la unió
 
 template <typename T>
-   void particio<T>::copia_repre(node* a, node* p, node* auxiliar){
+   void particio<T>::copia_repre(node* p, node* a, node* auxiliar){
         if(a!=NULL and p!=NULL){
-            node* represent = find(a);
-            node *repreA=buscanode(auxiliar,represent->_k);
-            p->representant=repreA;
-            
-        
-        copia_repre(a->_esq, p->_esq, auxiliar);
-        copia_repre(a->_dret, p->_dret, auxiliar);
-        
+            node* represent = find(p); //busca representante de p._arrel
+            node *repreA=buscanode(auxiliar,represent->_k); //Busca el representante de antes en _arrel
+            a->representant=repreA; //asigna a _arrel el repre encontrado
+            copia_repre(p->_esq, a->_esq, auxiliar);
+            copia_repre(p->_dret, a->_dret, auxiliar);
         }
-    }  
+    }
 //Metode auxiliar copia
 // La còpia es fa seguint un recorregut en preordre.
 template <typename T>
