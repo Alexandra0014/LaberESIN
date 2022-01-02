@@ -18,7 +18,7 @@ node *_arrel;
 //Mètode Constructora
 node* copia_particio(node *n);
 void destrueix_particio(node* p);
-void copia_repre(node *a,node *p)const throw();
+void copia_repre(node* a, node* p, node* auxiliar);
 
 ///Mètodes d'afegir
 node* insereix_avl(node *n, const T &k);
