@@ -17,20 +17,18 @@ particio<T>::particio(nat n) throw(error){
 //Metode auxiliar per copiar tots els representants després de la unió
 
 template <typename T>
-void particio<T>::copia_repre(node *a,node *p)const throw(){
-
-    if(a!=NULL && p!= NULL){
-        node *repreP = find(p);
-        //cout<<"REPRE P: "<<repreP->_k<<endl;
-        node *repreA = buscanode(a,repreP->_k);
-        //cout<<"REPRE A: "<<repreA-> _k<<endl;
-        a -> representant = repreA;
-        //cout<<"REPRE AAAAAAAAA: "<<a->representant->_k<<endl;
-        copia_repre(a -> _esq,p -> _esq);
-        copia_repre(a -> _dret,p -> _dret);
-    }
-
-}
+   void particio<T>::copia_repre(node* a, node* p, node* auxiliar){
+        if(a!=NULL and p!=NULL){
+            node* represent = find(a);
+            node *repreA=buscanode(auxiliar,represent->_k);
+            p->representant=repreA;
+            
+        
+        copia_repre(a->_esq, p->_esq, auxiliar);
+        copia_repre(a->_dret, p->_dret, auxiliar);
+        
+        }
+    }  
 //Metode auxiliar copia
 // La còpia es fa seguint un recorregut en preordre.
 template <typename T>
@@ -46,7 +44,6 @@ typename particio<T>::node* particio<T>::copia_particio(node* p) {
       aux -> representant = NULL;
       aux -> _esq = copia_particio(p -> _esq);
       aux -> _dret = copia_particio(p -> _dret);
-
     }
     catch (...) {
       destrueix_particio(aux);
@@ -54,8 +51,6 @@ typename particio<T>::node* particio<T>::copia_particio(node* p) {
   }
   return aux;
 }
-
-
 // Constructora per còpia, assignació i destructora.
 template <typename T>
 particio<T>::particio(const particio & p) throw(error){
@@ -63,14 +58,13 @@ particio<T>::particio(const particio & p) throw(error){
     n_elem = p.n_elem;
     max_grup = p.max_grup;
     _arrel = copia_particio(p._arrel);
-    copia_repre(_arrel,p._arrel);
-
+    copia_repre(p._arrel, _arrel, _arrel);
 }
 ////////////////////// ASSIGNACIÓ ////////////////
 template <typename T>
 particio<T> & particio<T>::operator=(const particio & p) throw(error){
 
-     if(this != &p){
+    if(this != &p){
         particio<T> tmp(p);
         destrueix_particio(_arrel);
         n_max = p.n_max;
@@ -96,7 +90,6 @@ template <typename T>
 particio<T>::~particio() throw(){
     destrueix_particio(_arrel);
 }
-
 ////////////////////// AFEGIR ////////////////
 //Metode auxiliar factor equilibri
 template <typename T>
@@ -104,13 +97,11 @@ nat particio<T>::factor_eq(node *n){
     if (n == NULL) return 0;
     return altura_max(n->_esq) - altura_max(n->_dret);
 }
-
 //Metode auxiliar max:  retorna el maxim de dos element
 template <typename T>
 T particio<T>::max(T a, T b){
     return (a > b)? a : b;
 }
-
 //Metode auxiliar altura_max: retorna la clau màxima de la particio
 template <typename T>
 nat particio<T>::altura_max(node *n){
@@ -244,9 +235,7 @@ bool particio<T>:: existeix(node *n, T e, bool trobat) const throw(){
     }
     return trobat;
 }
-
 //PREORDRE HOME JAAAAAAAAAA
-
 template <typename T>
 void particio<T>:: preOrder(node *n) const throw()
 {
@@ -257,10 +246,7 @@ void particio<T>:: preOrder(node *n) const throw()
         preOrder(n->_dret);
     }
 }
-
-
 //Metode auxiliar retorna elements en format preOrdre
-
 template <typename T>
 typename particio<T>::node* particio<T>:: find(node *n)const throw(error){    //Busca si e és un representant
     //Es busca el pare del element donat
@@ -269,12 +255,11 @@ typename particio<T>::node* particio<T>:: find(node *n)const throw(error){    //
     }
     return n;
 }
-
 //Metode que busca el node pare per després contar els fills
 template <typename T>
 typename particio<T>::node* particio<T>::buscanode(node *n, T e) const throw(){
     while(n != NULL){
-        cout<<"n->_k*: "<<n->_k<<endl;
+        //cout<<"n->_k*: "<<n->_k<<endl;
         if(e > n->_k){  //derecha
             n = n->_dret;
         }else if(e < n->_k){ //izq
@@ -285,12 +270,9 @@ typename particio<T>::node* particio<T>::buscanode(node *n, T e) const throw(){
     }
     return n;
 }
-
-
 // Uneix els dos grups als quals pertanyen aquests dos elements. Si tots dos
 // elements ja pertanyien al mateix grup no fa res.
 // Es produeix un error si algun dels elements no pertany a la partició.
-
 template <typename T>
 void particio<T>::unir(const T & x, const T & y) throw(error){
     if(!existeix(_arrel,x,false) || !existeix(_arrel,y,false)) throw error(ElemInexistent);
@@ -300,19 +282,14 @@ void particio<T>::unir(const T & x, const T & y) throw(error){
         node* rx = find(nx);  //mira si l'element hi es al AVL / u representant de x
         //cout<<endl;
         node* ry = find(ny);  //mira si l'element hi es al AVL / v representant de y
-
         //cout<<"RX: "<<rx<<" RY: "<<ry<<endl;
-
         if(rx->_k != ry->_k){
             int cx,cy;
-
             //cout<<"REPRESENTANT NX: "<<rx -> representant -> _k<<endl;
             //cout<<"REPRESENTANT NY: "<<ry -> representant -> _k<<endl;
-
             cx = rx->fills;       //conta els fills del node x
             cy = ry->fills;      //conta els fills del node y
             //cout<<"CX: "<<cx<<" CY: "<<cy<<endl;
-
             if(cx > cy){ //unim els nodes de cy a cx
                 ry -> representant = rx -> representant;
                 cy = cy+cx;
@@ -331,11 +308,9 @@ void particio<T>::unir(const T & x, const T & y) throw(error){
         }
     }
 }
-
 ////////////////////// MATEIX GRUP ////////////////
 // Retorna si els elements x i y pertanyen al mateix grup.
 // Es produeix un error si algun dels dos elements no pertany a la partició.
-
 template <typename T>
 bool particio<T>::mateix_grup(const T & x, const T & y) const throw(error){
     bool trobat = false;
@@ -349,15 +324,12 @@ bool particio<T>::mateix_grup(const T & x, const T & y) const throw(error){
     }
     return trobat;
 }
-
 ////////////////////// MAXIM GRUP ////////////////
-
 // Retorna el número de grups que té la particio.
 template <typename T>
 nat particio<T>::size() const throw(){
     return max_grup;
 }
-
 //////////////////////  NUM Elements ////////////////
 // Retorna el número d'elements que té la particio.
 template <typename T>
