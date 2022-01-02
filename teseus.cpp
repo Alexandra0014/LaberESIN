@@ -17,14 +17,8 @@ void teseus::buscar(const laberint & M,const posicio & inici, const posicio & fi
     }
     else{
       while(PosAct != final){
-            //cout<<"AAAAAAAAAAAAAAAAA"<<endl;
-            //PosAct.first = i;
-            //PosAct.second = j;
             posicio aux(PosAct.first, PosAct.second);
-            c = M(PosAct);
-
-      	     //pos[]
-             //cout<<pos[0].first<<" "<<pos[0].second<<endl;
+            c = M(PosAct); //cambra actual
             if(c.porta_oberta(paret("nord")) == false && c.porta_oberta(paret("est")) == false && c.porta_oberta(paret("sud")) == false && c.porta_oberta(paret("oest")) == false){
                 throw error(SenseSolucio);
             }
@@ -33,28 +27,24 @@ void teseus::buscar(const laberint & M,const posicio & inici, const posicio & fi
                 pos[0] = PosAct;
                 PosAct.first-=1;
                 cout <<"PosActfirst1: "<<PosAct.first<<" PosActsecond1: "<<PosAct.second<<endl;
-                //cout <<"Posfirst1: "<<pos.first<<" Possecond1: "<<pos.second<<endl;
 
             }else if(c.porta_oberta(paret("est")) and (pos[0].first != aux.first || pos[0].second != aux.second+1)){
                 L.push_back(PosAct);
                 pos[0] = PosAct;
                 PosAct.second += 1;
                 cout <<"Posfirst2: "<<PosAct.first<<" PosActsecond2: "<<PosAct.second<<endl;
-                 //cout <<"Posfirst2: "<<pos.first<<" Possecond2: "<<pos.second<<endl;
 
             }else if(c.porta_oberta(paret("sud")) and (pos[0].first != aux.first+1 || pos[0].second != aux.second)){
                   L.push_back(PosAct);
                   pos[0] = PosAct;
                   PosAct.first += 1;
                   cout <<"Posfirst3: "<<PosAct.first<<" PosActsecond3: "<<PosAct.second<<endl;
-                   //cout <<"Posfirst3: "<<pos.first<<" Possecond3: "<<pos.second<<endl;
             }else if(c.porta_oberta(paret("oest")) and (pos[0].first != aux.first || pos[0].second != aux.second-1)){
 
               L.push_back(PosAct);
               pos[0] = PosAct;
               PosAct.second -= 1;
               cout <<"Posfirst4: "<<PosAct.first<<" PosActsecond4: "<<PosAct.second<<endl;
-               //cout <<"Posfirst4: "<<pos.first<<" Possecond4: "<<pos.second<<endl;
 
         }else{
           throw error(SenseSolucio);

@@ -1,5 +1,4 @@
 #include "particio.hpp"
-#include<iostream>
 using namespace std;
 
 
@@ -232,17 +231,6 @@ bool particio<T>:: existeix(node *n, T e, bool trobat) const throw(){
     }
     return trobat;
 }
-//PREORDRE HOME JAAAAAAAAAA
-template <typename T>
-void particio<T>:: preOrder(node *n) const throw()
-{
-    if(n != NULL)
-    {
-        cout << n->_k<< " ";
-        preOrder(n->_esq);
-        preOrder(n->_dret);
-    }
-}
 //Metode auxiliar retorna elements en format preOrdre
 template <typename T>
 typename particio<T>::node* particio<T>:: find(node *n)const throw(error){    //Busca si e és un representant
@@ -277,16 +265,11 @@ void particio<T>::unir(const T & x, const T & y) throw(error){
         node *nx = buscanode(_arrel, x);     //node de x
         node *ny = buscanode(_arrel, y);    // node de y
         node* rx = find(nx);  //mira si l'element hi es al AVL / u representant de x
-        //cout<<endl;
         node* ry = find(ny);  //mira si l'element hi es al AVL / v representant de y
-        //cout<<"RX: "<<rx<<" RY: "<<ry<<endl;
         if(rx->_k != ry->_k){
             int cx,cy;
-            //cout<<"REPRESENTANT NX: "<<rx -> representant -> _k<<endl;
-            //cout<<"REPRESENTANT NY: "<<ry -> representant -> _k<<endl;
             cx = rx->fills;       //conta els fills del node x
             cy = ry->fills;      //conta els fills del node y
-            //cout<<"CX: "<<cx<<" CY: "<<cy<<endl;
             if(cx > cy){ //unim els nodes de cy a cx
                 ry -> representant = rx -> representant;
                 cy = cy+cx;

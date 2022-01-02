@@ -30,7 +30,6 @@ static node* rightRotate(node *y);
 static node* leftRotate(node *x);
 
 //Mètode find
-void preOrder(node *n) const throw();
 node* find(node *n) const throw(error);
 
 
