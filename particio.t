@@ -1,4 +1,5 @@
 #include "particio.hpp"
+#include<iostream>
 using namespace std;
 
 
@@ -263,6 +264,7 @@ typename particio<T>::node* particio<T>::buscanode(node *n, T e) const throw(){
 // Es produeix un error si algun dels elements no pertany a la partició.
 template <typename T>
 void particio<T>::unir(const T & x, const T & y) throw(error){
+    cout<<"AAAAAAAAA"<<endl;
     if(!existeix(_arrel,x,false) || !existeix(_arrel,y,false)) throw error(ElemInexistent);
     else{
         node *nx = buscanode(_arrel, x);     //node de x
@@ -296,6 +298,8 @@ void particio<T>::unir(const T & x, const T & y) throw(error){
 // Es produeix un error si algun dels dos elements no pertany a la partició.
 template <typename T>
 bool particio<T>::mateix_grup(const T & x, const T & y) const throw(error){
+    cout<<"EEEEEE"<<endl;
+    preOrder(_arrel);
     bool trobat = false;
     if(!existeix(_arrel,x,false) || !existeix(_arrel,y,false)) throw error(ElemInexistent);
     else{
@@ -324,4 +328,15 @@ nat particio<T>::num_elements() const throw(){
 template <typename T>
 nat particio<T>::num_maxim() const throw(){
   return n_max;
+}
+//PREORDRE HOME JAAAAAAAAAA
+template <typename T>
+void particio<T>:: preOrder(node *n) const throw()
+{
+    if(n != NULL)
+    {
+        cout << n->_k<< " ";
+        preOrder(n->_esq);
+        preOrder(n->_dret);
+    }
 }
