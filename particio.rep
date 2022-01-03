@@ -24,7 +24,7 @@ void copia_repre(node* p, node* a, node* auxiliar);
 node* insereix_avl(node *n, const T &k);
 node* newNode(T k);
 static nat altura_max(node *n);
-static T max(T a, T b);
+static nat max(nat a, nat b);
 static nat factor_eq(node *n);
 static node* rightRotate(node *y);
 static node* leftRotate(node *x);
@@ -33,6 +33,7 @@ static node* leftRotate(node *x);
 node* find(node *n) const throw(error);
 
 
+void preOrder(node* n);
 //Mètodes d'UNIR
 bool existeix(node *n, T e, bool trobat) const throw();
 node* buscanode(node *n, T e) const throw();
