@@ -86,6 +86,7 @@ template <typename T>
 particio<T>::~particio() throw(){
     destrueix_particio(_arrel);
 }
+
 ////////////////////// AFEGIR ////////////////
 //Metode auxiliar factor equilibri
 template <typename T>
@@ -95,7 +96,7 @@ nat particio<T>::factor_eq(node *n){
 }
 //Metode auxiliar max:  retorna el maxim de dos element
 template <typename T>
-T particio<T>::max(T a, T b){
+nat particio<T>::max(nat a, nat b){
     return (a > b)? a : b;
 }
 //Metode auxiliar altura_max: retorna la clau màxima de la particio
@@ -179,7 +180,9 @@ typename particio<T>::node* particio<T>::insereix_avl(node *n, const T &k){
     }
 
     //Actualització altura maxima del node anterior
-    n->alt_max = 1 + max(altura_max(n->_esq),altura_max(n->_dret));
+    nat i = altura_max(n->_esq);
+    nat j = altura_max(n->_dret);
+    n->alt_max = 1 + max(i,j);
 
     // Factor d'equilibri del node anterior pero comprovar si esta desequilibrat
     int equilibri = factor_eq(n);
