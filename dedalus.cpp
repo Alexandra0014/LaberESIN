@@ -45,6 +45,12 @@ bool mirarCambra(cambra c, util::vector<cambra> llistacambres){
     return trobat;
 }
 
+int combinacionumeros(int i, int j) {
+   int cont = 1;
+   while (cont <= j)
+      cont *= 10;
+   return i*cont + j;
+} 
 
 void dedalus::construir(laberint & M) throw(error){
     //1. Cal crear tants conjunts com cambres hi ha, i a cada conjunt hi haurà una cambra diferent.
@@ -59,42 +65,52 @@ void dedalus::construir(laberint & M) throw(error){
 
     //cout<<"holu";
     nat tamanyL = M.num_files() * M.num_columnes();
-    particio<posicio> conjunt(tamanyL); //partició de posicions amb size del total de cambres
+    particio<nat> conjunt(tamanyL); //partició de posicions amb size del total de cambres
     for(nat i = 1; i <= M.num_files(); i++ ){
         for(nat j = 1; j <= M.num_columnes(); j++ ){
-            posicio pos(i, j);
-            conjunt.afegir(pos);    //afegim posicions de cambres diferents
+            int combi = combinacionumeros(i, j);
+            conjunt.afegir(combi);    //afegim posicions de cambres diferents
+            cout<<"combi"<<combi<<endl;
         }
     }
     
     //Inicialitzacions
     //Cambra al atzar:
     posicio prand = generaposicioRandom(M);
+    int prandi = combinacionumeros(prand.first, prand.second);
+    cout<<"prandi: "<<prandi<<endl;
     cambra C = M(prand); ////cambra a l'atzar inicial
     int pared = generaparetRandom(true, C, prand, M); //Paret inicial
+    cout<<"pared: "<<pared<<endl;
     posicio paux = generaAdjacent(prand, pared); //Posicio adjacent inicial
+    cout<<"paux: "<<paux.first<<" "<<paux.second<<endl;
+    int pauxi = combinacionumeros(paux.first, paux.second);
+    cout<<"pauxi: "<<pauxi<<endl;
     util::vector<cambra> llistacambres;
 
-    while(!conjunt.mateix_grup(prand,paux) && tamanyL!=llistacambres.size()){    //Mientras no esten en ele mismo conj i no haya mirado todas las cambras
+    while(!conjunt.mateix_grup(prandi,pauxi) && tamanyL!=llistacambres.size()){    //Mientras no esten en ele mismo conj i no haya mirado todas las cambras
         //cout<<"AAAAAAAAA"<<endl;
         //Fer obrir porta passant la pared i el prand --> te abre camino a dos cambres adjacents
         M.obre_porta(pared,prand);
         //Donada la cambra que tenim (amb obre porta  tamb obrim el seu adjacent) i una vegada tenim un camino
         // fem union
-        conjunt.unir(prand,paux); //unim AVL
+        conjunt.unir(prandi,pauxi); //unim AVL
         //Canvies de prand i paux
         llistacambres.push_back(C);
         prand = generaposicioRandom(M);
+        prandi = combinacionumeros(prand.first, prand.second);
         cambra cnew = M(prand); ////cambra a l'atzar
         while(mirarCambra(cnew,llistacambres)){
             prand = generaposicioRandom(M);
+            prandi = combinacionumeros(prand.first, prand.second);
             cnew = M(prand); ////cambra a l'atzar
         }
         C=cnew;
         pared = generaparetRandom(true, C, prand, M); //Paret
         paux = generaAdjacent(prand, pared); //Posicio adjacent
+        pauxi = combinacionumeros(paux.first, paux.second);
 
     }
-    throw error(EstaExcavat);
+    //throw error(EstaExcavat);
 
 }
