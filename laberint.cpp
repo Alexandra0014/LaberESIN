@@ -159,7 +159,7 @@ void laberint::obre_porta(paret p, const posicio & pos) throw(error){ //REVISAR 
              if( i == fila && j == col){
                _c[i][j].obre_porta(p);
                //parets adjacents
-               if(p == 0) _c[i+1][j].obre_porta(p+2);
+               if(p == 0) _c[i-1][j].obre_porta(p+2);
                else if( p == 1) _c[i][j+1].obre_porta(p+2);
                else if(p == 2) _c[i+1][j].obre_porta(p-2);
                else if (p == 3) _c[i][j-1].obre_porta(p-2);

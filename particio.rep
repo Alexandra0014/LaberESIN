@@ -37,4 +37,4 @@ bool existeix(node *n, T e, bool trobat) const throw();
 node* buscanode(node *n, T e) const throw();
 
 
-void preOrder(node *n)const throw();
+//void preOrder(node *n)const throw();

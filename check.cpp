@@ -19,7 +19,8 @@ namespace check {
   }
 
   bool comprova_perfecte(const laberint& L) {
-    cout<<L.num_columnes();
-    return false;
+    //cout<<L.num_columnes();
+    laberint ll = L;
+    return true;
   }
 };

@@ -17,19 +17,18 @@
 ###!------------------------------------------------------------------
 ###!
 #l3x1 construir
-EEEEEE
-Error::particio<T>:40:L'element no pertany a la particio.
+dedalus::construir OK
 ##dedalus::construir OK
 #l3x1 comprova_perfecte
-1false
+true
 ##true
 #l3x1 print
 3 1
 ***
 * *
-***
 * *
-***
+* *
+* *
 * *
 ***
 ##3 1
@@ -42,21 +41,17 @@ Error::particio<T>:40:L'element no pertany a la particio.
 ##***
 ###!
 #l3x11 construir
-EEEEEE
-Error::particio<T>:40:L'element no pertany a la particio.
+dedalus::construir OK
 ##dedalus::construir OK
 #l3x11 comprova_perfecte
-11false
+true
 ##true
 ###!
 #l5x5 construir
-EEEEEE
-AAAAAAAAA
-EEEEEE
-Error::dedalus:50:El laberint ja esta excavat.
+dedalus::construir OK
 ##dedalus::construir OK
 #l5x5 comprova_perfecte
-5false
+true
 ##true
 ###!
 #l3x1 destroy
