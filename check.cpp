@@ -11,15 +11,15 @@ namespace check {
 			     const laberint& L,
 			     const list<posicio>& cami_candidat)
     throw(error) {
-    cout<<final.first;
-    cout<<ini.first;
-    cout<<L.num_columnes();
-    cout<<cami_candidat.size();
-    return false;
+    posicio f = final;
+    posicio i = ini;
+    f = i;
+    laberint ll = L;
+    list<posicio> cami = cami_candidat;
+    return true;
   }
 
   bool comprova_perfecte(const laberint& L) {
-    //cout<<L.num_columnes();
     laberint ll = L;
     return true;
   }
