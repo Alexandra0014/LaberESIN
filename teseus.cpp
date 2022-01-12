@@ -1,58 +1,49 @@
 #include "teseus.hpp"
 #include <iostream>
 using namespace std;
-void teseus::buscar(const laberint & M,const posicio & inici, const posicio & final,std::list<posicio> & L) throw(error){
-    posicio PosAct(inici.first, inici.second);
-    posicio pos[2];
-    pos[0] = PosAct;
 
-    nat Ffila = final.first;
-    nat Fcol = final.second;
-    cambra c;
+//LLista d'adjacència
+std::list<posicio>*adjList;
 
-    if( inici == final) L.push_back(inici);
-    else if (inici.first <= 0 || inici.first > M.num_files() || inici.second <= 0 || inici.second > M.num_columnes()
-          || Ffila <= 0 || Ffila > M.num_files() || Fcol <= 0 || Fcol > M.num_columnes() ){
-            throw error(IniciFinalNoValid);
+
+void createAdjList(const laberint & M){
+    posicio Pos(M.posi.first, M.posi.second);
+    adjList = new std::list<posicio> *[M.posi.first];
+    for(nat i = 0; i< M.posi.first; i++){
+            adjList[i] = new std::list<posicio>[M.posi.second];
     }
-    else{
-      while(PosAct != final){
-            posicio aux(PosAct.first, PosAct.second);
-            c = M(PosAct); //cambra actual
-            if(c.porta_oberta(paret("nord")) == false && c.porta_oberta(paret("est")) == false && c.porta_oberta(paret("sud")) == false && c.porta_oberta(paret("oest")) == false){
-                throw error(SenseSolucio);
-            }
-            else if(c.porta_oberta(paret("nord")) and (pos[0].first != aux.first-1 || pos[0].second != aux.second )){
-                L.push_back(PosAct);
-                pos[0] = PosAct;
-                PosAct.first-=1;
-                cout <<"PosActfirst1: "<<PosAct.first<<" PosActsecond1: "<<PosAct.second<<endl;
 
-            }else if(c.porta_oberta(paret("est")) and (pos[0].first != aux.first || pos[0].second != aux.second+1)){
-                L.push_back(PosAct);
-                pos[0] = PosAct;
-                PosAct.second += 1;
-                cout <<"Posfirst2: "<<PosAct.first<<" PosActsecond2: "<<PosAct.second<<endl;
-
-            }else if(c.porta_oberta(paret("sud")) and (pos[0].first != aux.first+1 || pos[0].second != aux.second)){
-                  L.push_back(PosAct);
-                  pos[0] = PosAct;
-                  PosAct.first += 1;
-                  cout <<"Posfirst3: "<<PosAct.first<<" PosActsecond3: "<<PosAct.second<<endl;
-            }else if(c.porta_oberta(paret("oest")) and (pos[0].first != aux.first || pos[0].second != aux.second-1)){
-
-              L.push_back(PosAct);
-              pos[0] = PosAct;
-              PosAct.second -= 1;
-              cout <<"Posfirst4: "<<PosAct.first<<" PosActsecond4: "<<PosAct.second<<endl;
-
-        }else{
-          throw error(SenseSolucio);
-        }
-        pos[1]=PosAct;
+}
+void teseus::buscar(const laberint & M,const posicio & inici, const posicio & final,std::list<posicio> & L) throw(error){
+    nat tamanyL = M.num_files() * M.num_columnes();
+    int prev[(int)tamanyL];
+    int d[(int)tamanyL];
+    int distance = -1;
+    for(nat i = 0; i<tamanyL; i++){
+        d[i]= 9999; //inf
+        p[i]= -1;
+    }
+    d[inici]=0;
+    std::list<bool> S(tamanyL,false);
+    std::list<posicio> Q;
+    for(nat i = 1; i <= inici; i++){
+      for(nat j = 1; j <= final; j++){
+        posicio pos(i, j);
+        Q.push_back(pos); //afegim cada node a la queue
       }
-    L.push_back(final);
-  }
+    }
+    while(!Q.empty()){
+        nat u = Q.top().second;
+        Q.pop();
 
+        if(!S[u]){
+            S[u] = true;
+            if(u == final){
+                distance = d[u];
+                return;
+            }
+            int m =
+        }
+    }
 
 }
