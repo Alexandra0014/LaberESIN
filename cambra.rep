@@ -1,3 +1,16 @@
-//Privats
+/** CLASSE CAMBRA **/
+/*
+    Aquest mòdul té com a objectiu la representació rectangular d'una habitació del laberint.
+    Cal tenir en compte que cada cambra té parets a totes les direccions, és a dir, NORD, SUD,
+    EST i OEST. A més, aquestes parets poden contenir portes que estiguin obertes o tancades.
+    Finalment, una cambra pot tenir mida segons la quantitat de portes tancades que té.
+*/
 
-bool _porta[4]; //obert o tancat
+/** ATRIBUT PRIVAT **/
+/*
+    Hem decidit que per a la representació de la cambra és necessari un array de booleans
+    de mida 4, ja que com sabem,els arrays es una manera molt ràpida d'accedir a dades.
+    D'aquesta forma podrem consultar si una paret té una porta oberta o no, ja que cada
+    posició del array representa una direcció.
+*/
+bool _porta[4];

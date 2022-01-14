@@ -1,2 +1,19 @@
+/** CLASSE LABERINT **/
+/*
+    Aquest mòdul té com a objectiu representar i manipular laberints sense mida acotada.
+    Cada laberint té unes cambres donades que estàn comunicades amb portes per les parets
+    adjacents.
+*/
+
+/** ATRIBUTS PRIVAT **/
+/*
+    Hem decidit que per a la representació del laberint és requereixen dos atributs. Un
+    per determinar la mida del laberint (número de files i columnes) i per tant les posicions
+    de les cambres. I l'altre, és un punter on apunta als arrays de cambres emmagatzemats a
+    memòria i consulta el seu contingut ( ja que són dos *).
+    Amb aquest atribut volem fer de forma dinàmica la creació d'un laberint, ja que com no té
+    una mida acotada, no es pot fer una matriu estàtica.
+
+*/
 posicio posi;
 cambra** _c;
