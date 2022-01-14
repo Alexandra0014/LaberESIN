@@ -9,8 +9,8 @@
 /** ATRIBUT PRIVAT **/
 /*
     Hem decidit que per a la representació de la cambra és necessari un array de booleans
-    de mida 4, ja que com sabem,els arrays es una manera molt ràpida d'accedir a dades.
-    D'aquesta forma podrem consultar si una paret té una porta oberta o no, ja que cada
+    de mida 4, ja que com sabem, els arrays és una manera molt ràpida d'accedir a dades.
+    D'aquesta forma podrem consultar si una paret té una porta oberta o no, perquè cada
     posició del array representa una direcció.
 */
 bool _porta[4];

@@ -6,8 +6,12 @@ using namespace std;
 
 ////////////////////// CONSTRUCTORA ////////////////
 // Construeix una particio amb n elements com a màxim.
+/* COST: */
 template <typename T>
 particio<T>::particio(nat n) throw(error){
+    /*PRE: */
+    /*POST:*/
+
     n_max = n;
     n_elem = 0;
     max_grup = 0;
@@ -15,9 +19,12 @@ particio<T>::particio(nat n) throw(error){
 }
 ////////////////////// CONSTRUCTORA COPIA ////////////////
 //Metode auxiliar per copiar tots els representants després de la unió
-
+/* COST: */
 template <typename T>
    void particio<T>::copia_repre(node* p, node* a, node* auxiliar){
+       /*PRE: */
+       /*POST:*/
+
         if(a!=NULL and p!=NULL){
             node* represent = find(p); //busca representante de p._arrel
             node *repreA=buscanode(auxiliar,represent->_k); //Busca el representante de antes en _arrel
@@ -28,8 +35,12 @@ template <typename T>
     }
 //Metode auxiliar copia
 // La còpia es fa seguint un recorregut en preordre.
+/* COST: */
 template <typename T>
 typename particio<T>::node* particio<T>::copia_particio(node* p) {
+    /*PRE: */
+    /*POST:*/
+
   node* aux = NULL;
   if (p != NULL) {
     aux = new node;
@@ -49,8 +60,12 @@ typename particio<T>::node* particio<T>::copia_particio(node* p) {
   return aux;
 }
 // Constructora per còpia, assignació i destructora.
+/* COST: */
 template <typename T>
 particio<T>::particio(const particio & p) throw(error){
+    /*PRE: */
+    /*POST:*/
+
     n_max = p.n_max;
     n_elem = p.n_elem;
     max_grup = p.max_grup;
@@ -58,8 +73,11 @@ particio<T>::particio(const particio & p) throw(error){
     copia_repre(p._arrel, _arrel, _arrel);
 }
 ////////////////////// ASSIGNACIÓ ////////////////
+/* COST: */
 template <typename T>
 particio<T> & particio<T>::operator=(const particio & p) throw(error){
+    /*PRE: */
+    /*POST:*/
 
     if(this != &p){
         particio<T> tmp(p);
@@ -75,8 +93,12 @@ particio<T> & particio<T>::operator=(const particio & p) throw(error){
 ////////////////////// DESTRUCTORA ////////////////
 //Metode auxiliar Destructora
 // La destrucció es fa seguint un recorregut en postordre.
+/* COST: */
 template <typename T>
 void particio<T>::destrueix_particio(node* p) {
+    /*PRE: */
+    /*POST:*/
+
   if (p != NULL) {
     destrueix_particio(p -> _esq);
     destrueix_particio(p -> _dret);
@@ -85,30 +107,49 @@ void particio<T>::destrueix_particio(node* p) {
 }
 template <typename T>
 particio<T>::~particio() throw(){
+    /*PRE: */
+    /*POST:*/
+
     destrueix_particio(_arrel);
 }
 
 ////////////////////// AFEGIR ////////////////
 //Metode auxiliar factor equilibri
+/* COST: */
 template <typename T>
 nat particio<T>::factor_eq(node *n){
+    /*PRE: */
+    /*POST:*/
+
     if (n == NULL) return 0;
     return altura_max(n->_esq) - altura_max(n->_dret);
 }
 //Metode auxiliar max:  retorna el maxim de dos element
+/* COST: */
 template <typename T>
 nat particio<T>::max(nat a, nat b){
+    /*PRE: */
+    /*POST:*/
+
     return (a > b)? a : b;
 }
 //Metode auxiliar altura_max: retorna la clau màxima de la particio
+/* COST: */
 template <typename T>
 nat particio<T>::altura_max(node *n){
+    /*PRE: */
+    /*POST:*/
+
     if (n == NULL) return 0;
     return n->alt_max;
 }
 //Metode auxiliar per crear un nou node
+/* COST: */
 template <typename T>
 typename particio<T>::node* particio<T>:: newNode(T k){
+    /*PRE: */
+    /*POST:*/
+
     node* n = new node;
     n -> _k = k;
     n -> _esq = NULL;
@@ -123,8 +164,12 @@ typename particio<T>::node* particio<T>:: newNode(T k){
 
 //ROTACIONS
 //Girar a la dreta el subarbre arrelat amb y
+/* COST: */
 template <typename T>
 typename particio<T>::node* particio<T>::rightRotate(node *y){
+    /*PRE: */
+    /*POST:*/
+
     node *x = y->_esq;
     node *aux = x->_dret;
 
@@ -142,8 +187,12 @@ typename particio<T>::node* particio<T>::rightRotate(node *y){
     return x;
 }
 //Girar a la esquerra el subarbre arrelat amb x
+/* COST: */
 template <typename T>
 typename particio<T>::node* particio<T>::leftRotate(node *x){
+    /*PRE: */
+    /*POST:*/
+
     node *y = x->_dret;
     node *aux = y->_esq;
 
@@ -162,8 +211,12 @@ typename particio<T>::node* particio<T>::leftRotate(node *x){
 }
 
 // Metode auxiliar d'afegir
+/* COST: */
 template <typename T>
 typename particio<T>::node* particio<T>::insereix_avl(node *n, const T &k){
+    /*PRE: */
+    /*POST:*/
+
     //BST
     if (n == NULL){
         if(n_max == n_elem ) throw error(ParticioPlena);
@@ -219,14 +272,23 @@ return n;
 // un nou grup. En cas que l'element ja estigués present a la partició llavors
 // no es modifica la partició. Es produeix un error si la particio ja té el
 // número màxim d'elements abans d'afegir aquest nou.
+
+/* COST: */
 template <typename T>
 void particio<T>::afegir(const T &x) throw(error){
+    /*PRE: */
+    /*POST:*/
+
     _arrel = insereix_avl(_arrel, x);
 }
 ////////////////////// UNIR ////////////////
 //metode si existeix o no l'element
+/* COST: */
 template <typename T>
 bool particio<T>:: existeix(node *n, T e, bool trobat) const throw(){
+    /*PRE: */
+    /*POST:*/
+
     if(n != NULL)
     {
         if(n -> _k == e) trobat = true;
@@ -236,19 +298,30 @@ bool particio<T>:: existeix(node *n, T e, bool trobat) const throw(){
     return trobat;
 }
 //Metode auxiliar retorna elements en format preOrdre
+/* COST: */
 template <typename T>
 typename particio<T>::node* particio<T>:: find(node *n)const throw(error){    //Busca si e és un representant
+    /*PRE: */
+    /*POST:*/
+
     //Es busca el pare del element donat
+    /* COST: */
     while(n != n->representant){
+        /*INV:*/
         n = n->representant;
     }
     return n;
 }
 //Metode que busca el node pare per després contar els fills
+/* COST: */
 template <typename T>
 typename particio<T>::node* particio<T>::buscanode(node *n, T e) const throw(){
+    /*PRE: */
+    /*POST:*/
+
+    /* COST: */
     while(n != NULL){
-        //cout<<"n->_k*: "<<n->_k<<endl;
+         /*INV:*/
         if(e > n->_k){  //derecha
             n = n->_dret;
         }else if(e < n->_k){ //izq
@@ -262,9 +335,14 @@ typename particio<T>::node* particio<T>::buscanode(node *n, T e) const throw(){
 // Uneix els dos grups als quals pertanyen aquests dos elements. Si tots dos
 // elements ja pertanyien al mateix grup no fa res.
 // Es produeix un error si algun dels elements no pertany a la partició.
+
+/* COST: */
 template <typename T>
 void particio<T>::unir(const T & x, const T & y) throw(error){
-    //cout<<"AAAAAAAAA"<<endl;
+    /*PRE: */
+    /*POST:*/
+
+
     if(!existeix(_arrel,x,false) || !existeix(_arrel,y,false)) throw error(ElemInexistent);
     else{
         node *nx = buscanode(_arrel, x);     //node de x
@@ -296,10 +374,13 @@ void particio<T>::unir(const T & x, const T & y) throw(error){
 ////////////////////// MATEIX GRUP ////////////////
 // Retorna si els elements x i y pertanyen al mateix grup.
 // Es produeix un error si algun dels dos elements no pertany a la partició.
+
+/* COST: */
 template <typename T>
 bool particio<T>::mateix_grup(const T & x, const T & y) const throw(error){
-    //cout<<"EEEEEE"<<endl;
-    //preOrder(_arrel);
+    /*PRE: */
+    /*POST:*/
+
     bool trobat = false;
     if(!existeix(_arrel,x,false) || !existeix(_arrel,y,false)) throw error(ElemInexistent);
     else{
@@ -313,31 +394,31 @@ bool particio<T>::mateix_grup(const T & x, const T & y) const throw(error){
 }
 ////////////////////// MAXIM GRUP ////////////////
 // Retorna el número de grups que té la particio.
+/* COST: */
 template <typename T>
 nat particio<T>::size() const throw(){
+    /*PRE: */
+    /*POST:*/
+
     return max_grup;
 }
 //////////////////////  NUM Elements ////////////////
 // Retorna el número d'elements que té la particio.
+/* COST: */
 template <typename T>
 nat particio<T>::num_elements() const throw(){
+    /*PRE: */
+    /*POST:*/
+
   return n_elem;
 }
 //////////////////////  NUM MAXIM ////////////////
 // Retorna el número màxim d'elements que pot tenir la particio.
+/* COST: */
 template <typename T>
 nat particio<T>::num_maxim() const throw(){
+    /*PRE: */
+    /*POST:*/
+
   return n_max;
 }
-//PREORDRE HOME JAAAAAAAAAA
-/*
-template <typename T>
-void particio<T>:: preOrder(node *n) const throw()
-{
-    if(n != NULL)
-    {
-        cout << n->_k<< " ";
-        preOrder(n->_esq);
-        preOrder(n->_dret);
-    }
-}*/

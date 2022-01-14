@@ -3,8 +3,8 @@
 /* Construeix una cambra amb les portes als llocs indicats.*/
 /* COST: O(1) Ja que només hi han assignacions*/
 cambra::cambra(bool n, bool s, bool e, bool o) throw(error){
-    /*PRE: Ens passen per paràmetre 4 booleans tots inicilitzats a false*/
-    /*POST: Array complert amb portes tancades a totes les direccions*/
+    /*PRE: Ens passen per paràmetre 4 booleans tots inicialitzats a false*/
+    /*POST: Array complet amb portes tancades a totes les direccions*/
 
   _porta[0] = n;
   _porta[1] = e;
@@ -50,7 +50,7 @@ cambra::~cambra() throw(){}
 bool cambra::porta_oberta(paret p) const throw(){
   /*PRE: Ens passen per paràmetre una direcció d'una paret*/
   /*POST: Retorna un booleà true si la porta en la paret indicada és oberta
-  sinó retorna false*/
+  si no retorna false*/
 
   bool porta_open = false;
   if(p == 0)
@@ -77,9 +77,9 @@ bool cambra::porta_oberta(paret p) const throw(){
 /* COST: O(1) Ja que només hi han assignacions i if's*/
 void cambra::obre_porta(paret p) throw(error){
   /*PRE: Ens passen per paràmetre una direcció d'una paret */
-  /*POST: Possem a true la porta indicada segons la direcció de la paret pasada per p.i en
-  cas que no hagi estat oberta abans, si no existeix la paret que ens passen, llancem
-  l'error ParetInexistent*/
+  /*POST: Posem a true la porta indicada segons la direcció de la paret passada per p.i en
+    cas que no hagi estat oberta abans, si no existeix la paret que ens passen, llancem
+    l'error ParetInexistent*/
 
   if(p == 0)
   {
@@ -109,9 +109,9 @@ void cambra::obre_porta(paret p) throw(error){
 /* COST: O(1) Ja que només hi han assignacions i if's*/
 void cambra::tanca_porta(paret p) throw(error){
   /*PRE: Ens passen per paràmetre una direcció d'una paret */
-  /*POST: Possem a false la porta indicada segons la direcció de la paret pasada per p.i en
-  cas que no hagi estat tancada abans, si no existeix la paret que ens passen, llancem
-  l'error ParetInexistent*/
+  /*POST: Posem a false la porta indicada segons la direcció de la paret passada per p.i en
+    cas que no hagi estat tancada abans, si no existeix la paret que ens passen, llancem
+    l'error ParetInexistent*/
 
   if( p == 0)
   {
@@ -156,8 +156,8 @@ bool cambra::operator==(const cambra & c) const throw(){
 /* COST: O(1) Ja que és una igualació negada*/
 bool cambra::operator!=(const cambra & c) const throw(){
   /*PRE: Ens passen per paràmetre una cambra c*/
-  /*POST: Retorna false en cas que l'array de portes de la cambra passada per p.i
-  sigui diferent a la nostra */
+  /*POST:Retorna false en cas que l'array de portes de la cambra passada per p.i
+  sigui diferent de la nostra. */
 
   return not(*this == c);
 }
@@ -174,8 +174,8 @@ bool cambra::operator!=(const cambra & c) const throw(){
 /* COST: O(4) És el nombre de posicions que té el array _porta*/
 bool cambra::operator<(const cambra & c) const throw(){
   /*PRE: Ens passen per paràmetre una cambra c */
-  /*POST: Retorna true en cas que nostra cambra sigui més petita que la passada per p.i,
-  false en cas contrari*/
+  /*POST: Retorna true en cas que la nostra cambra sigui més petita que la passada per p.i,
+  false en cas contrari.*/
 
   int contT_nuestro = 0, contT_suyo = 0;
   bool menor_que = false;

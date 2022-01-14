@@ -1,3 +1,11 @@
+/** CLASSE PARTICIÓ **/
+/*
+*/
+
+/** ATRIBUTS PRIVAT **/
+*/
+/*
+
 nat max_grup;   //numero màxim de GRUPS
 nat n_max;  //numero màxim de NODES
 nat n_elem;       // Nombre de nodes del subarbre
@@ -11,9 +19,7 @@ struct node {
 };
 node *_arrel;
 
-/////////////////////////
-//// METODES PRIVATS////
-///////////////////////
+/** MÈTODES PRIVATS **/
 
 //Mètode Constructora
 node* copia_particio(node *n);
