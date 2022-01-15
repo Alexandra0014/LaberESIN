@@ -1,9 +1,18 @@
 /** CLASSE PARTICIÓ **/
 /*
+    Aquest mòdul té com a objectiu emmagatzemar una col·lecció d'elements de tipus T,
+    classificats en diferents grups. És a dir, mitjançant un AVL, anem emmagatzemant
+    els diferents elements en grups diferents amb posibilitat d'unió, on cada grup
+    té el seu propi representant.
+
+    Hem decidit utilitzar l'algoritme d'emmagatzematge AVL en comptes de per exemple Taules Hash,
+    perquè tot i tenir una complexitat de O(1) que supera la del AVL que s'espera que sigui O(log n),
+    
 */
 
 /** ATRIBUTS PRIVAT **/
 */
+    Per a la realització d'aquesta classe hem hagut de crear diversos atributs privats. Per començar
 /*
 
 nat max_grup;   //numero màxim de GRUPS

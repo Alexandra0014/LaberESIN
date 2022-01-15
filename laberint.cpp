@@ -29,14 +29,16 @@ laberint::laberint(nat num_fil, nat num_col) throw(error){
   else throw error(FilsColsIncorrecte);
 
 }
-
 // Constructora d'un laberint a partir d'un istream (canal d'entrada) is.
 // El format de l'istream seguirà l'exposat a l'apartat 2.3. Es presuposa que
 // el laberint és correcte.
-/* COST: */
+
+/* COST: O(is*medida), ja que fem tantes iteracions com strings ens passin pel canal d'entrada i
+dins farem tantes interacions fins a medida, és a dir, s.size()-1 la mida del string que ens passen per paràmetre menys 1  */
 laberint::laberint(std::istream & is) throw(error){
-  /*PRE: */
-  /*POST:*/
+  /*PRE: Ens passen pel canal d'entrada is la primera línea que correspon al nombre de files i columnes,
+    després la representació d'un laberint */
+  /*POST: Un laberint correctament construit a través del elements entrats per la variable is*/
 
   int fila = 0, columna = 0;
   is >> fila >> columna;
@@ -44,18 +46,29 @@ laberint::laberint(std::istream & is) throw(error){
   posi.second=columna;
 
   string s;
+
+  /*Aquest booleà indicarà si hem de tractar el cas d'obrir porta est-oest o nord-sud.*/
   bool trobat = true;
 
+  /*Generem un laberint l auxiliar sense cap porta oberta i amb les mides indicades.
+  Aquest laberint ens serveix perquè a continuació anirem obrint les portes que ens interessen, segons
+  n'hi hagi un asterisc o un espai en blanc al laberint que ens entren per is*/
   laberint l = laberint(posi.first, posi.second);
   int contador = -1;
-  /* COST: */
+
+  /* COST: O(is*medida), ja que fem tantes iteracions com strings ens passin pel canal d'entrada i
+  dins farem tantes interacions fins a medida, és a dir, s.size()-1 la mida del string que ens passen per paràmetre menys 1  */
   while(getline(is, s)){
   int medida = s.size()-1;
   if(trobat){
-    /* COST: O(medida)*/
+    /* COST: O(medida) ja que recorrerà com màxim fins a medida que equival a s.size()-1, és a dir la mida del string
+    que ens passen per paràmetre menys 1 perquè l'ultima posició sempre serà un asterisc i al ser paret exterior
+    no n'hi ha opció de que hagi cap porta oberta*/
   	for (int i = 0, fil = 0; i < medida; i+=2, fil++){
-        /*INV:*/
+      /*INV: Mentre que la i sigui inferior a medida recorrem les posicions del string s que ens passen pel canal d'entrada.*/
   		if (s[i] != '*' ){
+         /* Tractem el cas en que n'hi hagi un espai en blanc en l'string que ens passen.
+         En aquest cas volem obrir porta i ho fem també per a la paret adjacent*/
   			 l._c[contador][fil-1].obre_porta(paret("est"));
   			 l._c[contador][fil].obre_porta(paret("oest"));
   		}
@@ -64,9 +77,12 @@ laberint::laberint(std::istream & is) throw(error){
   	contador++;
   }
   else{
-    /* COST: O(medida)*/
+
+    /* COST: O(medida) ja que recorrerà com màxim fins a medida que equival a s.size()-1, és a dir la mida del string
+    que ens passen per paràmetre menys 1 perquè l'ultima posició sempre serà un asterisc i al ser paret exterior
+    no n'hi ha opció de que hagi cap porta oberta*/
   	for (int i = 1, fil = 0; i < medida; i+=2, fil++){
-        /*INV: Mentres que i sigui menor a medida */
+      /*INV: Mentre que la i sigui inferior a medida recorrem les posicions del string s que ens passen pel canal d'entrada.*/
   		if (s[i] != '*' ){
   			 l._c[contador][fil].obre_porta(paret("nord"));
          l._c[contador-1][fil].obre_porta(paret("sud"));
@@ -76,10 +92,9 @@ laberint::laberint(std::istream & is) throw(error){
   }
 }
 
-*this = l;
+*this = l; //Copiem l'informació del laberint auxiliar l al nostre laberint.
 
 }
-
 
 // Constructora per còpia
 /* COST: O(posi.first*posi.second) ja que recorrem totes les posicions del laberint l per
@@ -297,32 +312,47 @@ void laberint::tanca_porta(paret p, const posicio & pos) throw(error){
 // Escriu el laberint a l'ostream (canal de sortida) os. El format per escriure
 // el laberint seguirà l'exposat a l'apartat 2.3.
 
-/* COST: */
+/* COST: O(posi.first*posi.second) ja que com a màxim reocorrera fins a tantes files per columnes hi hagi*/
 void laberint::print(std::ostream & os) const throw(){
-    /*PRE: */
-    /*POST:*/
+    /*PRE: Considerem que el laberint nostre es correcte*/
+    /*POST:Imprimeix per pantalla la representació gràfica del laberint en qüestió*/
 
     os<< (int)posi.first<<" "<<(int)posi.second<<'\n';
-    /* COST: */
+
+    /* COST total: O(posi.first*posi.second) ja que com a màxim reocorrera fins a tantes files per columnes hi hagi*/
     for (int i = 0; i < (int)posi.first; i++){
+      /*INV: Mentres la i sigui menor a posi.first recorrerà per tantes files hi hagi.
+
+      /* COST: O(posi.second) ja que farà com a màxim posi.second iteracions*/
     	for(int j=0; j<(int)posi.second; j++){
-           /*INV:*/
+         /*INV: Mentres la j sigui menor a posi.second mira si n'hi ha cap porta oberta a les parets nords,
+         si n'hi ha una oberta no treu per pantalla l'asterisc*/
     	   os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*');
     	}
 
+      /*Posem l'últim asterisc de les parets nords, fem salt de línea i passem a mirar la paret oest que considerem
+      la primera columna d'asteriscs després de la fila nord*/
     	os<<'*'<<'\n'<< (_c[i][0].porta_oberta(paret("oest")) ? ' ' : '*') << ' ';
 
+      /* COST: O(posi.second) ja que farà com a màxim posi.second iteracions*/
     	for(int j=0; j<(int)posi.second; j++){
-            /*INV:*/
-            if(j == (int)posi.second-1){
-              os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*');
-            }else{
-               os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << ' ';
-             }
+          /*INV: Mentres la j sigui menor a posi.second mira si n'hi ha cap porta oberta a les parets ests (que considerem aquelles
+          que venen a continuació de la oest i es van alternant amb les files nord), si n'hi ha una oberta no treu per pantalla l'asterisc*/
+
+          if(j == (int)posi.second-1){// Si estem a la última posició no volem que tregui un espai a continuació de l'asterisc, si no que faci el salt de línea
+            os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*');
+          }else{
+             os << (_c[i][j].porta_oberta(paret("est")) ? ' ' : '*') << ' ';
+           }
     	}
     	os<<'\n';
     }
 
- os<< string((int)posi.second*2+1, (_c[(int)posi.first-1][(int)posi.second-1].porta_oberta(paret("sud")) ? ' ' : '*')) <<'\n';
+    /*Sabem que la última fila a ser exterior només podrà ser tots asteriscs seguits, ja que no hi ha possibilitat de tenir cap porta oberta.
+     Per tant, si sabem que una cambra la seva paret sud ve representada per 3 asteriscs i les seves adjacents comparteixen asteriscs, podem
+     determinar que hi haurà el doble + 1 d'asteriscs que el nombre de columnes, és a dir posi.second*2+1.
+
+     Llavors ens limitem a treure per pantalla tants asteriscs com posi.second*2+1*/
+    os<< string((int)posi.second*2+1, (_c[(int)posi.first-1][(int)posi.second-1].porta_oberta(paret("sud")) ? ' ' : '*')) <<'\n';
 
 }
