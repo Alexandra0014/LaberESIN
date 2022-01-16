@@ -11,7 +11,7 @@ using namespace std;
 fins al nombre de files indicat per paràmetre*/
 laberint::laberint(nat num_fil, nat num_col) throw(error){
   /*PRE: Ens passen el nombre de files i columnes respectivament*/
-  /*POST: Creació dinàmica d'un laberint segons les mides passades per p.i
+  /*POST: Creació dinàmica d'un laberint segons les mides passades per paràmetre
   amb totes les portes tancades*/
 
   if (num_fil != 0 && num_col != 0)
@@ -102,7 +102,7 @@ copiar-lo al nostre*/
 laberint::laberint(const laberint & l) throw(error){
   /*PRE: Ens passen un laberint l*/
   /*POST:A nostra array cambra( o sigui nostre laberint) se li copien tots els elements
-  del laberint passat per p.i*/
+  del laberint passat per paràmetre*/
 
   posi.first = l.posi.first;
   posi.second = l.posi.second;
@@ -118,7 +118,7 @@ laberint::laberint(const laberint & l) throw(error){
   for(nat i = 0; i < posi.first; i++){
       for(nat j = 0; j < posi.second; j++){
           /*INV: Mentre que la i, j sigui menor a posi.first i posi.second, a la posició [i][j] de l'array _c,
-          anem copiant els elements [i][j] del laberint passat per p.i*/
+          anem copiant els elements [i][j] del laberint passat per paràmetre*/
         _c[i][j] = l._c[i][j];
       }
   }
@@ -130,7 +130,7 @@ assignar-lo al nostre */
 laberint & laberint::operator=(const laberint & l) throw(error){
   /*PRE: Ens passen un laberint l*/
   /*POST: A nostra array cambra( o sigui el nostre laberint) li esborrem el contingut i li assignem tots els elements
-  del laberint passat per p.i*/
+  del laberint passat per paràmetre*/
 
  if(this != &l){
     if(posi.first != l.posi.first ||  posi.second != l.posi.second){
@@ -155,7 +155,7 @@ laberint & laberint::operator=(const laberint & l) throw(error){
       for(nat i = 0; i < posi.first; i++){
           for(nat j = 0; j < posi.second; j++){
               /*INV: Mentre que la i, j sigui menor a posi.first i posi.second, a la posició [i][j] de l'array _c,
-              anem assignant els elements [i][j] del laberint passat per p.i*/
+              anem assignant els elements [i][j] del laberint passat per paràmetre*/
             _c[i][j] = l._c[i][j];
           }
       }
@@ -201,7 +201,7 @@ nat laberint::num_columnes() const throw(){
 /* COST: O(posi.first*posi.second) ja que en el pitjor dels casos, si entrem al if, recorrem totes les posicions del laberint */
 cambra laberint::operator()(const posicio & pos) const throw(error){
   /*PRE: Ens passen per paràmetre una posició especifica d'una cambra */
-  /*POST: De la posició específica passada pel p.i, retornem la cambra situada dins del laberint */
+  /*POST: De la posició específica passada per paràmetre, retornem la cambra situada dins del laberint */
 
   int fila =  (int) pos.first-1;
   int col =  (int) pos.second-1;
@@ -212,7 +212,7 @@ cambra laberint::operator()(const posicio & pos) const throw(error){
     for(int i = 0; i < (int)posi.first; i++){
         for(int j = 0; j < (int)posi.second; j++){
             /*INV: Mentre que la i, j sigui menor a posi.first i posi.second, en el cas en què [i][j]
-            coincideixi amb les posicions passades per p.i, assignar la cambra trobada en aquella posició a
+            coincideixi amb les posicions passades per paràmetre, assignar la cambra trobada en aquella posició a
             la variable resultat.*/
             if(_c[i][j] == _c[fila][col]){
               res = _c[fila][col];
@@ -246,7 +246,7 @@ void laberint::obre_porta(paret p, const posicio & pos) throw(error){
     for(int i = 0; i < (int)posi.first; i++){
         for(int j = 0; j < (int)posi.second; j++){
           /*INV: Mentre que la i, j sigui menor a posi.first i posi.second, anem mirant si les posicions donen a l'exterior.
-            En cas que donin, salta un error, en cas contrari s'obre la porta de la cambra de la posició passada pel p.i i
+            En cas que donin, salta un error, en cas contrari s'obre la porta de la cambra de la posició passada per paràmetre i
             la seva adjacent.*/
 
           //Exteriors
@@ -291,7 +291,7 @@ void laberint::tanca_porta(paret p, const posicio & pos) throw(error){
     for(int i = 0; i < (int)posi.first; i++){
         for(int j = 0; j < (int)posi.second; j++){
             /*INV: Mentre que la i, j sigui menor a posi.first i posi.second, anem mirant si les posicions coincideix amb la
-            donada pel p.i. En cas que coincideixi, tanca la porta especificada a la paret donada per p.i.
+            donada per paràmetre. En cas que coincideixi, tanca la porta especificada a la paret donada per paràmetre.
             */
             if( i == fila && j == col){
                _c[i][j].tanca_porta(p);

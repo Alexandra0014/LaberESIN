@@ -5,10 +5,10 @@
     adjacents.
 
     Per a la implementació d'aquesta classe hem decidit utilitzar un array amb doble punter
-    en comptes de una matriu. Aquesta decisió ve donada ja que com el laberint no té
+    en comptes d'una matriu. Aquesta decisió ve donada, ja que com el laberint no té
     una mida acotada, s'ha de fer de forma dinàmica.
     Durant tota la realització dels mètodes, per accedir al contingut d'un laberint,
-    s'haurà de fer us dels atributs privats, on un d'ells és el doble punter on
+    s'haurà de fer ús dels atributs privats, on un d'ells és el doble punter on
     apuntarà a les cambres (que en realitat el conjunt de totes aquestes és el
     laberint en si).
 */

@@ -1,8 +1,8 @@
 #include "particio.hpp"
 
 
-// Construeix una particio amb n elements com a màxim.
-/* COST: O(1) Per que només hi han assignacions*/
+// Construeix una partició amb n elements com a màxim.
+/* COST: O(1) Perquè només hi han assignacions*/
 template <typename T>
 particio<T>::particio(nat n) throw(error){
     /*PRE: Ens passen per paràmetre el nùmero màxim d'elements que pot tenir la partició*/
@@ -20,7 +20,7 @@ cost O(n) */
 template <typename T>
    void particio<T>::copia_repre(node* p, node* a, node* auxiliar){
        /*PRE: Ens passen tres punters a nodes p, a i auxiliar, el primer pertany a la partició p que ens donen
-        al mètode còpia de partició i els altres dos pertanyen a la nostra particio*/
+        al mètode còpia de partició i els altres dos pertanyen a la nostra partició*/
        /*POST: Fa la còpia de tots els representants amb les unions que s'hagin fet fins al moment*/
 
         if(a!=NULL and p!=NULL){
@@ -31,7 +31,7 @@ template <typename T>
             copia_repre(p->_dret, a->_dret, auxiliar);
         }
     }
-//Metode auxiliar copia
+//Mètode auxiliar còpia
 // La còpia es fa seguint un recorregut en preordre.
 /* COST: O(log(n_elem)) ja que tant en les crides recursives com a la crida de la funció destrueix_particio, hi ha
 un cost de O(log(n_elem)), per tant, aquest seria el seu cost */
@@ -39,7 +39,7 @@ template <typename T>
 typename particio<T>::node* particio<T>::copia_particio(node* p) {
     /*PRE: Ens passen un punter a node p el qual pertany a la partició p que ens donen
      al mètode còpia de partició*/
-    /*POST: Còpia la informació del node* p a un node* aux*/
+    /*POST: Còpia la informació del node* p a un node* aux */
 
   node* aux = NULL;
   if (p != NULL) {
@@ -65,7 +65,7 @@ cost O(n) */
 template <typename T>
 particio<T>::particio(const particio & p) throw(error){
     /*PRE: Ens passen per paràmetre una partició p. */
-    /*POST: Tots els elements de la partició passada per p.i els copiem sobre la nostra*/
+    /*POST: Tots els elements de la partició passada per paràmetre els copiem sobre la nostra*/
 
     n_max = p.n_max;
     n_elem = p.n_elem;
@@ -73,14 +73,15 @@ particio<T>::particio(const particio & p) throw(error){
     _arrel = copia_particio(p._arrel);
     copia_repre(p._arrel, _arrel, _arrel);
 }
-//Assignació .
-/* COST: O(log(n_elem)) ja que el pitjor cas es la crida a la funció de destrueix_particio, on té un cost
+
+//Assignació
+/* COST: O(log(n_elem)) ja que el pitjor cas és la crida a la funció de destrueix_particio, on té un cost
 O(log(n_elem)) que seria el mateix que dir cost O(log(n))*/
 template <typename T>
 particio<T> & particio<T>::operator=(const particio & p) throw(error){
     /*PRE: Ens passen per paràmetre una partició p */
-    /*POST: Eliminem tots els elements de nostra partició per després assignar-li tots els elements de la partició
-    passada per p.i. */
+    /*POST: Eliminem tots els elements de la nostra partició per després assignar-li tots els elements de la partició
+    passada per paràmetre. */
 
     if(this != &p){
         particio<T> tmp(p);
@@ -94,12 +95,12 @@ particio<T> & particio<T>::operator=(const particio & p) throw(error){
     return *this;
 }
 
-//Metode auxiliar Destructora
+//Mètode auxiliar destructora
 // La destrucció es fa seguint un recorregut en postordre.
-/* COST: O(log(n_elem)) ja que va recorrent la mateitat del avl a cada crida recursiva, que seria el mateix que dir cost O(log(n))*/
+/* COST: O(log(n_elem)) ja que va recorrent la meitat de l'avl a cada crida recursiva, que seria el mateix que dir cost O(log(n))*/
 template <typename T>
 void particio<T>::destrueix_particio(node* p) {
-    /*PRE: Ens passen per paràmenter en node inicial de la partició que volem eliminar*/
+    /*PRE: Ens passen per paràmetre en node inicial de la partició que volem eliminar*/
     /*POST: De forma recursiva es van eliminant tots els nodes de l'arbre*/
 
   if (p != NULL) {
@@ -119,29 +120,29 @@ particio<T>::~particio() throw(){
 }
 
 
-//Metode auxiliar factor equilibri
-/* COST: O(1) ja que la crida a la funció altura_max és cost O(1), i encara que es facin dues crides, s'ha de agafar el màxim
+//Mètode auxiliar factor equilibri
+/* COST: O(1) ja que la crida a la funció altura_max és cost O(1), i encara que es facin dues crides, s'ha d'agafar el màxim
 i com costen el mateix el resultat es O(1)*/
 template <typename T>
 nat particio<T>::factor_eq(node *n){
-    /*PRE: Ens pasen un punter a node n que ve dondat de la funció insereix_avl*/
-    /*POST: Retorna la diferència entre altures màximes dels fills esquerres i fills drets, si es 0 es
+    /*PRE: Ens passen un punter a node n que ve donat de la funció insereix_avl*/
+    /*POST: Retorna la diferència entre altures màximes dels fills esquerres i fills drets, si és 0 és
     que està en equilibri*/
 
     if (n == NULL) return 0;
     return altura_max(n->_esq) - altura_max(n->_dret);
 }
-//Metode auxiliar max:
-/* COST: O(1) per qué es fa una simple comparació com si fós un if */
+//Mètode auxiliar max:
+/* COST: O(1) perquè es fa una simple comparació com si fos un if */
 template <typename T>
 nat particio<T>::max(nat a, nat b){
     /*PRE: Ens passen per paràmetre dos elements de tipus nat*/
-    /*POST: Retorna l'element màxim entre els dos p.i*/
+    /*POST: Retorna l'element màxim entre els dos nats a i b*/
 
     return (a > b)? a : b;
 }
-//Metode auxiliar altura_max: retorna la clau màxima de la particio
-/* COST: O(1) Ja que només fa un if en el pitjor dels cassos*/
+//Mètode auxiliar altura_max: retorna la clau màxima de la partició
+/* COST: O(1) Ja que només fa un if en el pitjor dels casos*/
 template <typename T>
 nat particio<T>::altura_max(node *n){
     /*PRE: Ens passen per paràmetre un node de la partició */
@@ -150,11 +151,11 @@ nat particio<T>::altura_max(node *n){
     if (n == NULL) return 0;
     return n->alt_max;
 }
-//Metode auxiliar per crear un nou node
+//Mètode auxiliar per crear un nou node
 /* COST: O(1) ja que es fan únicament assignacions*/
 template <typename T>
 typename particio<T>::node* particio<T>:: newNode(T k){
-    /*PRE: Ens passen un tipus T k que fa refenrència a la clau que ha de tenir el nou node*/
+    /*PRE: Ens passen un tipus T k que fa referència a la clau que ha de tenir el nou node*/
     /*POST: Retorna un nou node amb tota la seva informació corresponent*/
 
     node* n = new node;
@@ -171,12 +172,12 @@ typename particio<T>::node* particio<T>:: newNode(T k){
 
 
 //Girar a la dreta el subarbre arrelat amb y
-/* COST: O(1) ja que es criden a les funcions de max i altura_max les quals tenen O(1), per tant seguint
+/* COST: O(1) ja que es criden a les funcions de max i altura_max les quals tenen O(1), per tant, seguint
 la regla del màxim cost, aquesta funció és O(1)*/
 template <typename T>
 typename particio<T>::node* particio<T>::rightRotate(node *y){
     /*PRE: Ens passen un punter a node y que ens ve donat per la funció insereix_avl*/
-    /*POST: Retorna una nova arrel després de haver fet la rotació pertinent i actualitzar
+    /*POST: Retorna una nova arrel després d'haver fet la rotació pertinent i actualitzar
     les altures*/
 
     node *x = y->_esq;
@@ -195,12 +196,12 @@ typename particio<T>::node* particio<T>::rightRotate(node *y){
     return x;
 }
 //Girar a la esquerra el subarbre arrelat amb x
-/* COST: O(1) ja que es criden a les funcions de max i altura_max les quals tenen O(1), per tant seguint
+/* COST: O(1) ja que es criden a les funcions de max i altura_max les quals tenen O(1), per tant, seguint
 la regla del màxim cost, aquesta funció és O(1)*/
 template <typename T>
 typename particio<T>::node* particio<T>::leftRotate(node *x){
   /*PRE: Ens passen un punter a node x que ens ve donat per la funció insereix_avl*/
-  /*POST: Retorna una nova arrel després de haver fet la rotació pertinent i actualitzar
+  /*POST: Retorna una nova arrel després d'haver fet la rotació pertinent i actualitzar
   les altures*/
 
     node *y = x->_dret;
@@ -219,13 +220,14 @@ typename particio<T>::node* particio<T>::leftRotate(node *x){
     return y;
 }
 
-// Metode auxiliar d'afegir
-/* COST: O(log(n_elem)) ja que el pitjor cas és si entra al if per recòrrer una part del avl, el que suposaria un
+// Mètode auxiliar d'afegir
+/* COST: O(log(n_elem)) ja que el pitjor cas és si entra al if per recorre una part de l'avl, el que suposaria un
 cost de O(log(n)) */
 template <typename T>
 typename particio<T>::node* particio<T>::insereix_avl(node *n, const T &k){
-    /*PRE: */
-    /*POST:*/
+    /*PRE: Ens passen un punter a node n que ens ve de la funció afegir i un tipus T
+    equivalent a la clau del node que volem afegir a l'AVL*/
+    /*POST: Retorna l'AVL amb el nou element introduit*/
 
     //BST
     if (n == NULL){
@@ -243,7 +245,7 @@ typename particio<T>::node* particio<T>::insereix_avl(node *n, const T &k){
       }
     }
 
-    //Actualització altura maxima del node anterior
+    //Actualització altura màxima del node anterior
     nat i = altura_max(n->_esq);
     nat j = altura_max(n->_dret);
     n->alt_max = 1 + max(i,j);
@@ -286,21 +288,21 @@ return n;
 /* COST: O(log(n_elem)) ja que és fa una crida a la funció de insereix_avl i s'agafa el seu cost*/
 template <typename T>
 void particio<T>::afegir(const T &x) throw(error){
-    /*PRE: Ens passen per paràmetre un nou element per introduïr a la partició. */
-    /*POST: Un nou element és introduït de forma recursiva passant-li per paràmentre
-    el node inicial de la partició i el nou element que volem introduïr*/
+    /*PRE: Ens passen per paràmetre un nou element per introduir a la partició. */
+    /*POST: Un nou element és introduït de forma recursiva passant-li per paràmetre
+    el node inicial de la partició i el nou element que volem introduïr.*/
 
     _arrel = insereix_avl(_arrel, x);
 }
 
 //metode si existeix o no l'element
-/* COST: O(log(n_elem)) ja que va recorrent la mateitat del avl a cada crida recursiva, que seria el mateix que dir cost O(log(n))*/
+/* COST: O(log(n_elem))ja que va recorrent la meitat de l'AVL a cada crida recursiva, que seria el mateix que dir cost O(log(n))*/
 template <typename T>
 bool particio<T>:: existeix(node *n, T e, bool trobat) const throw(){
-    /*PRE: Ens passen per paràmetre el node inicial per recorrer l'arbre, l'element que volem buscar i finalment
-    un booleà inicialitzat a false per saber si existeix o no l'element*/
-    /*POST: Retorna true o false si l'element s'ha trobat o no, en cas que no s'hagui trobat significa que
-    no existeix dins de la partició*/
+    /*PRE: Ens passen per paràmetre el node inicial per recórrer l'arbre, l'element que volem buscar i finalment
+    un booleà inicialitzat a false per saber si existeix o no l'element.*/
+    /*POST: Retorna true o false si l'element s'ha trobat o no. En cas que no s'hagi trobat significa que
+    no existeix dins de la partició.*/
 
     if(n != NULL)
     {
@@ -319,23 +321,23 @@ typename particio<T>::node* particio<T>:: find(node *n)const throw(error){
 
     /* COST: O(n_elem) ja que en el pitjor dels casos recorrem tot l'arbre per trobar el representant de n*/
     while(n != n->representant){
-        /*INV: Mentre n sigui diferent del representant de n anem recorrent l'arbre*/
+        /*INV: Va recorrent l'arbre buscant per tots els nodes el representant del node passat per paràmetre*/
         n = n->representant;
     }
     return n;
 }
 
-/* COST: O(log(n_elem)) ja que va recorrent el AVL fent esquerra o dreta*/
+/* COST: O(log(n_elem)) ja que va recorrent l'AVL fent esquerra o dreta*/
 template <typename T>
 typename particio<T>::node* particio<T>::buscanode(node *n, T e) const throw(){
-    /*PRE: Ens passen per paràmetre el punter del node inicial de la particiío i un element d'aquesta*/
-    /*POST: Retorna el punter node dins de la particiío on es troba l'element passat pel p.i*/
+    /*PRE: Ens passen per paràmetre el punter del node inicial de la partició i un element d'aquesta*/
+    /*POST: Retorna el punter node dins de la partició on es troba l'element passat per paràmetre*/
 
     /* COST: O(log(n_elem)) ja que va recorrent el AVL fent esquerra o dreta*/
     while(n != NULL){
          /*INV: Mentre que el punter actual no apunti a NULL, va fent un recorregut postordre, tenint en compte que un AVL
-         va mirant si el valor clau del element és més gran o més petit dins d'un arbre equilibrat. Si és més gran se'n anirà cap
-         a la dreta i si és més petit se'n anirà cap a l'esquerra.*/
+        va mirant si el valor clau de l'element és més gran o més petit dins d'un arbre equilibrat. Si és més gran se n'anirà cap
+        a la dreta i si és més petit se n'anirà cap a l'esquerra.*/
         if(e > n->_k){
             n = n->_dret;
         }else if(e < n->_k){
@@ -394,7 +396,7 @@ cost O(n) */
 template <typename T>
 bool particio<T>::mateix_grup(const T & x, const T & y) const throw(error){
     /*PRE: Ens passen per paràmetre dos elements de tipus T */
-    /*POST: Retorna true o false segons si aquets dos elements pertanyen al mateix grup*/
+    /*POST: Retorna true o false segons si aquests dos elements pertanyen al mateix grup*/
 
     bool trobat = false;
     if(!existeix(_arrel,x,false) || !existeix(_arrel,y,false)) throw error(ElemInexistent);
