@@ -132,7 +132,8 @@ laberint & laberint::operator=(const laberint & l) throw(error){
   /*POST: A nostra array cambra( o sigui el nostre laberint) li esborrem el contingut i li assignem tots els elements
   del laberint passat per paràmetre*/
 
- if(this != &l){
+ if(this != &l){ //comparació del contingut del laberint
+     //En el cas on el laberint sigui de diferent mida
     if(posi.first != l.posi.first ||  posi.second != l.posi.second){
         /* COST: O(posi.first) ja que com a màxim arriba fins al nombre de files */
       for(nat i = 0; i < posi.first; i++){
@@ -330,11 +331,11 @@ void laberint::print(std::ostream & os) const throw(){
     	   os << '*' << (_c[i][j].porta_oberta(paret("nord")) ? ' ' : '*');
     	}
 
-      /*Posem l'últim asterisc de les parets nords, fem salt de línea i passem a mirar la paret oest que considerem
-      la primera columna d'asteriscs després de la fila nord*/
+        /*Posem l'últim asterisc de les parets nords, fem salt de línea i passem a mirar la paret oest que considerem
+        la primera columna d'asteriscs després de la fila nord*/
     	os<<'*'<<'\n'<< (_c[i][0].porta_oberta(paret("oest")) ? ' ' : '*') << ' ';
 
-      /* COST: O(posi.second) ja que farà com a màxim posi.second iteracions*/
+        /* COST: O(posi.second) ja que farà com a màxim posi.second iteracions*/
     	for(int j=0; j<(int)posi.second; j++){
           /*INV: Mentres la j sigui menor a posi.second mira si n'hi ha cap porta oberta a les parets ests (que considerem aquelles
           que venen a continuació de la oest i es van alternant amb les files nord), si n'hi ha una oberta no treu per pantalla l'asterisc*/

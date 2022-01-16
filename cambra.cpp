@@ -151,7 +151,7 @@ bool cambra::operator==(const cambra & c) const throw(){
   return igual;
 }
 
-// Desigultat entre cambres. Dues cambres no es consideren iguals
+// Desigualtat entre cambres. Dues cambres no es consideren iguals
 // si no tenen les mateixes portes obertes a les mateixes parets.
 /* COST: O(1) Ja que és una igualació negada*/
 bool cambra::operator!=(const cambra & c) const throw(){
