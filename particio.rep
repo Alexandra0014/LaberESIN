@@ -1,19 +1,41 @@
 /** CLASSE PARTICIÓ **/
 /*
     Aquest mòdul té com a objectiu emmagatzemar una col·lecció d'elements de tipus T,
-    classificats en diferents grups. És a dir, mitjançant un AVL, anem emmagatzemant
-    els diferents elements en grups diferents amb posibilitat d'unió, on cada grup
-    té el seu propi representant.
+    classificats en diferents grups. És a dir, mitjançant un AVL, anem guardant els
+    diferents elements en grups diferents amb posibilitat d'unió, on cada grup té el
+    seu propi representant.
 
-    Hem decidit utilitzar l'algoritme d'emmagatzematge AVL en comptes de per exemple Taules Hash,
-    perquè tot i tenir una complexitat de O(1) que supera la del AVL que s'espera que sigui O(log n),
-    
+    Hem decidit utilitzar l'algoritme d'emmagatzematge AVL en comptes de per exemple Taules Hash.
+    Això és degut a que tot i tenir una complexitat de O(1) que supera la del AVL que s'espera que
+    sigui O(log n), ens convé més a la llarga tenir les dades ordenades com al AVL (ja que per
+    exemple a la classe dedalus guardarem posicions a particio i es preferible que estiguin en ordre)
+    que no pas el millor cost de les Taules Hash. A més, a nivell de memòria un AVL és més eficient, ja que no
+    reserven més memòria de la que els cal. També cal tenir en compte que estem treballant amb
+    dades dinàmiques i que anem modificant la mida del nombre total d'elements,per tant, al fer insercions
+    de nous elements ,l'AVL torna a ser una gran opció pel que hem comentat anteriorment.
+
 */
 
 /** ATRIBUTS PRIVAT **/
-*/
-    Per a la realització d'aquesta classe hem hagut de crear diversos atributs privats. Per començar
 /*
+    Per a la realització d'aquesta classe hem hagut de crear diversos atributs privats.
+
+    Per començar hem creat tres variables del tipus nat, el primer és per a la identificació del nombre màxim de grups, el
+    segon per el nombre de nodes i el tercer per el nombre d'elements del AVL.
+    Aquestes variables ens seràn ùtils per consultar si s'han unit grups, per veure la quantitat d'elements que tenim al AVL
+    i per saber el màxim de nodes possibles que podem tenir a la partició, respectivament.
+
+    Seguidament, hem trobat necessari crear un struct anomenat node, per a la representació del AVL. Dins d'aquet struct
+    anirà la informació de la clau d'un node, un punter destinat a mirar que hi ha a l'esquerra del AVL desde el node actual i
+    un altre per mirar a la dreta. També una variable del tipus nat per tenir un seguiment de l'altura màxima on es troba el node,
+    i un altre per saber, d'aquest node, quants fills en té. Finalment, també necessitem un punter representant que apunti al pare del
+    node actual, aquest represent serà important per a la identificació de grups.
+
+    Ja per acabar, l'ultim atribut privat és un punter que apunta a un node. Utilitzant aquest punter podrem accedir a tota la
+    informació emmagatzemada al struct.
+
+
+*/
 
 nat max_grup;   //numero màxim de GRUPS
 nat n_max;  //numero màxim de NODES
@@ -29,27 +51,85 @@ struct node {
 node *_arrel;
 
 /** MÈTODES PRIVATS **/
+/* Per el correcte funciónament de la classe partició, ha estat necessari fer ús
+de mètodes auxiliars, a continuació un breu resum de cadascuna a part
+del PRE i  POST del .cpp*/
 
-//Mètode Constructora
+//Mètodes Constructora,Destructor i Còpia
+
 node* copia_particio(node *n);
+/* Aquest mètode auxiliar fa la implementació de copiar la partició que ens
+donen a partir del seu node inicial. Ha estat necessaria per poder fer
+recursivitat per recorrer tant nostre partició com la passada per p.i*/
+
 void destrueix_particio(node* p);
+/* Aquest mètode auxiliar fa la implementació de destruir la partició que ens
+donen a partir del node inicial passat per paràmetre.
+Ha estat necessaria per poder fer recursivitat.*/
+
 void copia_repre(node* p, node* a, node* auxiliar);
+/* Aquest mètode auxiliar fa la implementació recursiva de la busqueda
+del pare o representant del node p, passat per paràmetre, per després poder-ho aplicar
+a la nostra partició.
+És a dir, per a que la còpia sigui exacta,també ha de tenir en compte els representants,
+per això fa un recorregut simultani en ambdos particions assignant els represenants.
+Sense aquesta funció, després de fer una copia no funciónaria de forma
+correcte la unió */
 
 ///Mètodes d'afegir
+
 node* insereix_avl(node *n, const T &k);
+/* Aquest mètode auxiliar es qui fa tota la funció d'afegir. Ha estat necessari
+fer aquesta funció ja que requereix fer recursivitat. Dins d'aquest mètode també
+és fan crides a altres funcións auxiliars*/
+
 node* newNode(T k);
+/*Aquest mètode auxiliar té com a funciónalitat crear nous nodes inicialitzats
+amb els atributs privats. Fem aquesta funció com a alternativa a la funció
+inicialitzadora que hi ha per exemple en la classe diccionari treballada
+a classe */
+
 static nat altura_max(node *n);
+/* Aquest mètode auxiliar té com a obectiu retornar l'altura màxima del node
+passat per paràmetre en cas que no estigui buit. S'ha fet en una funció auxiliar
+per comoditat ja que al cridar-la ja saps que té en compte el cas on el node
+ja estigui buit */
+
 static nat max(nat a, nat b);
+/*Aquest mètode auxiliar és necessari per a la comparació d'elements de
+forma ràpida i eficient. Aquesta funció es crida diverses vegades en
+altres mètodes auxiliars*/
+
 static nat factor_eq(node *n);
+/*Aquest mètode auxiliar és utilitzat per comprovar si els dos subarbres del
+AVL estan o no equilibrats. Si retorna 0 significa que si que ho està, en cas
+contrari no ho estarà*/
+
 static node* rightRotate(node *y);
+/*Aquest mètode auxiliar fa que donat un node del AVL sigui reordenat per a que
+aquest estigui equilibrat. En aquest cas la rotació serà cap a la dreta.
+Una vegada rotat, s'actualitzen les altures del arbre.
+*/
 static node* leftRotate(node *x);
+/*Aquest mètode auxiliar fa que donat un node del AVL sigui reordenat per a que
+aquest estigui equilibrat. En aquest cas la rotació serà cap a la esquerra.
+Una vegada rotat, s'actualitzen les altures del arbre.
+*/
 
 //Mètode find
+
 node* find(node *n) const throw(error);
+/*Aquest mètode auxiliar recorre tot el AVL buscant el representant del node
+passat per paràmetre. Aquest mètode és molt ùtil per exemple a la funció
+unir, ja que requereix saber qui es el representant d'un grup per a unir-los*/
 
 //Mètodes d'UNIR
+
 bool existeix(node *n, T e, bool trobat) const throw();
+/*Aquest mètode auxiliar, de forma recursiva, va cercan si l'element passat per paràmetre
+existeix dins de la partició o no. Tenint aquesta funció, després és més fàcil
+gestionar altres mètodes doncs, si no existeix l'element, ja no es fa res o es treu un error*/
+
 node* buscanode(node *n, T e) const throw();
-
-
-//void preOrder(node *n)const throw();
+/*Aquest mètode auxiliar és un tipic recorregut de cerca d'un AVL de forma iterativa.
+Serveix com ajuda per trobar el punter node al AVL del element passat per paràmetre.*/

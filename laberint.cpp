@@ -166,7 +166,7 @@ laberint & laberint::operator=(const laberint & l) throw(error){
 //Destructora.
  /* COST: O(posi.first) ja que com a màxim arriba fins al nombre de files */
 laberint::~laberint() throw(){
-  /*PRE: -*/
+  /*PRE:  Cert */
   /*POST: Nostra laberint, és a dir, el punter de cambres, és esborrat*/
   /* COST: O(posi.first) ja que com a màxim arriba fins al nombre de files */
   for(nat i = 0; i < posi.first; i++){
@@ -178,14 +178,14 @@ laberint::~laberint() throw(){
 
 /* COST: O(1) Només és un return, per tant es cost constant*/
 nat laberint::num_files() const throw(){
-  /*PRE: -*/
+  /*PRE:  Cert */
   /*POST:Retorna el nombre de files del nostre laberint*/
 
   return posi.first;
 }
 /* COST: O(1) Només és un return, per tant es cost constant*/
 nat laberint::num_columnes() const throw(){
-    /*PRE: -*/
+    /*PRE: Cert */
     /*POST:Retorna el nombre de columnes del nostre laberint*/
 
   return posi.second;
@@ -321,7 +321,7 @@ void laberint::print(std::ostream & os) const throw(){
 
     /* COST total: O(posi.first*posi.second) ja que com a màxim reocorrera fins a tantes files per columnes hi hagi*/
     for (int i = 0; i < (int)posi.first; i++){
-      /*INV: Mentres la i sigui menor a posi.first recorrerà per tantes files hi hagi.
+      /*INV: Mentres la i sigui menor a posi.first recorrerà per tantes files hi hagi.*/
 
       /* COST: O(posi.second) ja que farà com a màxim posi.second iteracions*/
     	for(int j=0; j<(int)posi.second; j++){

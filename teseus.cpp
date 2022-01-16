@@ -49,7 +49,7 @@ if (inici.first <= 0 || inici.first > M.num_files() || inici.second <= 0 || inic
         visited[i][j] = false;
         dist[i][j]= 9999; //inf
         pred[i][j]= posEmpty;
-       
+
         }
     }
 
@@ -57,18 +57,18 @@ if (inici.first <= 0 || inici.first > M.num_files() || inici.second <= 0 || inic
     dist[inici.first-1][inici.second-1]=0; //primer element el inicial visitat distancia 0, si mateix
     pred[inici.first-1][inici.second-1]=inici;
     Q.push_back(inici);
-		
+
     while(!Q.empty() and not trobat){
-  
+
         posicio u = Q.front();
         Q.pop_front();
         //LLista d'adjacència
         std::list<posicio>adjList;
         createAdjList(M,adjList,u);
-       
+
         for (std::list<posicio>::iterator v = adjList.begin(); v != adjList.end() and not trobat; v++) {
             posicio V = *v;
-            //cout<<"aaaaaa?"<<endl;
+
             if (visited[V.first-1][V.second-1] == false) {
                 //al sumatorio de distancias se le añade el nuevo vertice actual+ahora el predecesor será este vertice visitado+ actualiza cola vertice adj
                 visited[V.first-1][V.second-1] = true;
@@ -76,7 +76,6 @@ if (inici.first <= 0 || inici.first > M.num_files() || inici.second <= 0 || inic
                 pred[V.first-1][V.second-1] = u;
                 Q.push_back(V);
                 if(V == final){
-                   
                     trobat = true;
                 }
             }
